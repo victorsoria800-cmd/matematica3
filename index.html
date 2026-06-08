@@ -185,6 +185,18 @@ footer{position:relative;z-index:10;text-align:center;padding:2rem 1rem;color:va
 <div id="greeting">
   <h2>Hola, <span id="student-name"></span> 👋</h2>
   <p style="color:var(--muted);font-size:14px;margin-top:6px">Elegí un tema para practicar</p>
+  <!-- Nuevo: Irracionales -->
+    <button class="topic-btn" onclick="showTopic('irracionales')">
+      <span class="topic-icon">🟰</span>
+      <h3>Números Irracionales</h3>
+      <p>Operaciones y propiedades</p>
+    </button>
+    <!-- Nuevo: Complejos -->
+    <button class="topic-btn" onclick="showTopic('complejos')">
+      <span class="topic-icon">🔷</span>
+      <h3>Números Complejos</h3>
+      <p>Operaciones y gráfica</p>
+    </button>
 </div>
 
 <!-- APP -->
@@ -596,7 +608,61 @@ F_i → F_i + k·F_j &nbsp; (sumar múltiplo de otra fila)</div>
       <div id="quiz-fac"></div>
     </div>
   </div>
+<!-- ===== NÚMEROS IRRACIONALES ===== -->
+  <div id="panel-irracionales" class="content-panel">
+    <div class="subtabs">
+      <button class="stab active" onclick="showSub('irr','teoria')">Teoría</button>
+      <button class="stab" onclick="showSub('irr','ejercicios')">Ejercicios</button>
+    </div>
+    <div id="irr-teoria">
+      <div class="sec">
+        <span class="sec-label label-blue">Concepto</span>
+        <h3>¿Qué son los números irracionales?</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.8">Son números que no pueden expresarse como una fracción de dos enteros. Su expresión decimal es infinita y no periódica.</p>
+        <div class="mblock">Ejemplos: √2, √3, π (Pi), e</div>
+      </div>
+      <div class="sec">
+        <span class="sec-label label-blue">Extracción de Factores</span>
+        <h3>Simplificar radical: √50</h3>
+        <button class="btn-toggle" onclick="toggleSol(this)">Ver solución</button>
+        <div class="solution">
+          <div class="step"><strong>Paso 1.</strong> <p>Factorizamos el 50: <span class="mi">50 = 2 · 5²</span></p></div>
+          <div class="step"><strong>Paso 2.</strong> <span class="mi">√50 = √(2 · 5²) = 5√2</span></div>
+          <div class="step"><strong>Resultado:</strong> <span class="mi">5√2</span></div>
+        </div>
+      </div>
+    </div>
+    <div id="irr-ejercicios" style="display:none"><div id="quiz-irr"></div></div>
+  </div>
 
+  <!-- ===== NÚMEROS COMPLEJOS ===== -->
+  <div id="panel-complejos" class="content-panel">
+    <div class="subtabs">
+      <button class="stab active" onclick="showSub('com','teoria')">Teoría</button>
+      <button class="stab" onclick="showSub('com','ejercicios')">Ejercicios</button>
+    </div>
+    <div id="com-teoria">
+      <div class="sec">
+        <span class="sec-label label-purple">Concepto</span>
+        <h3>La Unidad Imaginaria</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.8">Surge para resolver raíces de números negativos. Se define como:</p>
+        <div class="mblock">i = √−1 &nbsp; → &nbsp; i² = −1</div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.8">Un número complejo tiene la forma: <span class="mi">z = a + bi</span></p>
+      </div>
+      <div class="sec">
+        <span class="sec-label label-purple">Operaciones y Gráfica</span>
+        <h3>Suma: (2 + 3i) + (1 + 4i)</h3>
+        <button class="btn-toggle" onclick="toggleSol(this)">Ver solución</button>
+        <div class="solution">
+          <div class="step"><strong>Paso 1.</strong> <p>Sumamos partes reales: <span class="mi">2 + 1 = 3</span></p></div>
+          <div class="step"><strong>Paso 2.</strong> <p>Sumamos partes imaginarias: <span class="mi">3i + 4i = 7i</span></p></div>
+          <div class="step"><strong>Resultado:</strong> <span class="mi">3 + 7i</span></div>
+          <div class="step"><strong>Gráfica:</strong> <p>Se representa como el punto (3, 7) en el plano complejo (eje X = Real, eje Y = Imaginario).</p></div>
+        </div>
+      </div>
+    </div>
+    <div id="com-ejercicios" style="display:none"><div id="quiz-com"></div></div>
+  </div>
 </div><!-- end #app -->
 
 <footer>
