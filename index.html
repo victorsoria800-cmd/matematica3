@@ -1,783 +1,244 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Matemática III — EET N° 3117</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg: #0d0f1a;
-  --surface: #13162a;
-  --surface2: #1a1e35;
-  --border: rgba(255,255,255,0.07);
-  --accent: #6c8fff;
-  --accent2: #a78bfa;
-  --accent3: #34d399;
-  --accent4: #fb923c;
-  --text: #e8eaf6;
-  --muted: #8890b0;
-  --mono: 'JetBrains Mono', monospace;
-  --sans: 'Sora', sans-serif;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4}
-.orb{position:fixed;border-radius:50%;filter:blur(80px);opacity:.18;pointer-events:none;z-index:0}
-.orb1{width:500px;height:500px;background:#6c8fff;top:-150px;left:-100px}
-.orb2{width:400px;height:400px;background:#a78bfa;bottom:-100px;right:-100px}
-.orb3{width:300px;height:300px;background:#34d399;top:50%;left:50%;transform:translate(-50%,-50%)}
-header{position:relative;z-index:10;text-align:center;padding:3rem 1rem 2rem}
-.school-tag{display:inline-block;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(108,143,255,.3);padding:5px 14px;border-radius:20px;margin-bottom:1.2rem;background:rgba(108,143,255,.07)}
-header h1{font-size:clamp(2rem,6vw,3.8rem);font-weight:700;line-height:1.1;letter-spacing:-.02em;background:linear-gradient(135deg,#fff 0%,#a5b4fc 60%,#6c8fff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.5rem}
-header p{color:var(--muted);font-size:15px;font-weight:300}
-.year-badge{display:inline-block;margin-top:.8rem;font-size:12px;color:var(--accent3);border:1px solid rgba(52,211,153,.25);padding:4px 12px;border-radius:12px;background:rgba(52,211,153,.06)}
-#welcome-screen{position:relative;z-index:10;max-width:420px;margin:0 auto 3rem;padding:0 1rem}
-.welcome-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2rem;text-align:center}
-.welcome-card h2{font-size:18px;font-weight:600;margin-bottom:.4rem}
-.welcome-card p{color:var(--muted);font-size:13px;margin-bottom:1.2rem}
-.welcome-card input{width:100%;padding:10px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:var(--sans);font-size:15px;outline:none;transition:.2s}
-.welcome-card input:focus{border-color:var(--accent)}
-.welcome-card input::placeholder{color:var(--muted)}
-.btn-primary{display:block;width:100%;margin-top:12px;padding:11px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--sans);font-size:15px;font-weight:600;cursor:pointer;transition:.2s;letter-spacing:.01em}
-.btn-primary:hover{background:#8aa8ff;transform:translateY(-1px)}
-.btn-primary:active{transform:translateY(0)}
-#greeting{display:none;position:relative;z-index:10;text-align:center;padding:0 1rem 1.5rem}
-#greeting h2{font-size:22px;font-weight:600}#greeting span{color:var(--accent)}
-#app{display:none;position:relative;z-index:10;max-width:900px;margin:0 auto;padding:0 1rem 4rem}
-.topics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:2.5rem}
-.topic-btn{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.2rem 1rem;cursor:pointer;text-align:left;transition:.2s;color:var(--text);font-family:var(--sans)}
-.topic-btn:hover{border-color:rgba(108,143,255,.4);background:var(--surface2);transform:translateY(-2px)}
-.topic-btn.active{border-color:var(--accent);background:rgba(108,143,255,.1)}
-.topic-icon{font-size:22px;margin-bottom:8px;display:block}
-.topic-btn h3{font-size:14px;font-weight:600;line-height:1.3;margin-bottom:3px}
-.topic-btn p{font-size:11px;color:var(--muted)}
-.content-panel{display:none}
-.content-panel.active{display:block;animation:fadeIn .3s ease}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.subtabs{display:flex;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap}
-.stab{padding:7px 16px;border:1px solid var(--border);border-radius:20px;background:transparent;color:var(--muted);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;transition:.2s}
-.stab:hover{color:var(--text);border-color:rgba(255,255,255,.15)}
-.stab.active{background:var(--accent);border-color:var(--accent);color:#fff}
-.sec{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;margin-bottom:1rem}
-.sec-label{font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin-bottom:.6rem;display:block}
-.label-blue{color:var(--accent)}.label-purple{color:var(--accent2)}.label-green{color:var(--accent3)}.label-orange{color:var(--accent4)}
-.sec h3{font-size:16px;font-weight:600;margin-bottom:.8rem;line-height:1.4}
-.mblock{font-family:var(--mono);background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin:10px 0;font-size:13px;color:#c8d8ff;line-height:2;overflow-x:auto}
-.mi{font-family:var(--mono);background:rgba(108,143,255,.12);color:#c8d8ff;padding:1px 6px;border-radius:4px;font-size:13px}
-.step{border-left:2px solid var(--accent);padding:6px 12px;margin:8px 0;background:rgba(108,143,255,.04);border-radius:0 8px 8px 0}
-.step strong{color:var(--text);font-weight:600;font-size:13px}
-.step p,.step span{font-size:13px;color:var(--muted);line-height:1.7}
-.step .mi{color:#c8d8ff}
-.btn-toggle{margin-top:10px;padding:7px 16px;border:1px solid var(--border);border-radius:8px;background:var(--surface2);color:var(--muted);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;transition:.2s}
-.btn-toggle:hover{color:var(--text);border-color:rgba(255,255,255,.2)}
-.solution{margin-top:12px;border-top:1px solid var(--border);padding-top:12px;display:none}
-.solution.open{display:block;animation:fadeIn .25s ease}
-.rtable{border-collapse:collapse;margin:14px 0;width:auto}
-.rtable td{border:1px solid var(--border);padding:8px 14px;text-align:center;font-family:var(--mono);font-size:13px;min-width:48px}
-.rtable .rh{background:rgba(108,143,255,.18);color:var(--accent);font-weight:600}
-.rtable .rr{background:rgba(52,211,153,.1);color:var(--accent3);font-weight:600}
-.rtable .rm{color:var(--muted);font-size:12px}
-.quiz-card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:1.5rem;margin-bottom:1rem}
-.quiz-card h3{font-size:15px;font-weight:600;margin-bottom:.6rem;line-height:1.5}
-.quiz-card p{font-size:13px;color:var(--muted);margin-bottom:1rem}
-.quiz-options{display:flex;flex-direction:column;gap:8px}
-.qopt{padding:10px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);cursor:pointer;font-family:var(--sans);font-size:14px;text-align:left;transition:.2s}
-.qopt:hover:not(:disabled){border-color:rgba(108,143,255,.4);background:rgba(108,143,255,.06)}
-.qopt.correct{border-color:var(--accent3);background:rgba(52,211,153,.1);color:var(--accent3)}
-.qopt.wrong{border-color:#ef4444;background:rgba(239,68,68,.08);color:#ef4444}
-.qopt:disabled{cursor:default}
-.quiz-feedback{margin-top:10px;font-size:13px;font-weight:600;min-height:20px}
-.fb-ok{color:var(--accent3)}.fb-no{color:#ef4444}
-.score-bar{display:flex;align-items:center;gap:12px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 16px;margin-bottom:1.5rem;font-size:13px}
-.score-bar span{color:var(--muted)}
-.score-val{font-family:var(--mono);color:var(--accent);font-size:16px;font-weight:600}
-.progress-wrap{background:var(--surface2);border-radius:20px;height:6px;overflow:hidden;margin-bottom:4px}
-.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:20px;transition:width .5s ease}
-footer{position:relative;z-index:10;text-align:center;padding:2rem 1rem;color:var(--muted);font-size:12px;border-top:1px solid var(--border)}
-@media(max-width:580px){header h1{font-size:2rem}.topics-grid{grid-template-columns:1fr 1fr}.rtable td{padding:6px 8px;font-size:12px;min-width:36px}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matemática III — EET N° 3117</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📐</text></svg>">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --secondary: #ec4899;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --success: #22c55e;
+            --error: #ef4444;
+            --border: #334155;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg); color: var(--text-main); line-height: 1.6; min-height: 100vh; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 2rem; padding-bottom: 5rem; }
+        header { text-align: center; margin-bottom: 3rem; animation: fadeInDown 0.8s ease-out; }
+        .badge { background: rgba(99,102,241,0.1); color: var(--primary); padding: 0.5rem 1rem; border-radius: 99px; font-weight: 600; font-size: 0.875rem; display: inline-block; margin-bottom: 1rem; border: 1px solid rgba(99,102,241,0.2); }
+        h1 { font-size: 3rem; font-weight: 800; letter-spacing: -0.025em; margin-bottom: 0.5rem; background: linear-gradient(to right, #818cf8, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        #login-view { text-align: center; padding: 4rem 2rem; background: var(--card-bg); border-radius: 24px; border: 1px solid var(--border); max-width: 500px; margin: 0 auto; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
+        input { width: 100%; padding: 1rem 1.5rem; background: var(--bg); border: 2px solid var(--border); border-radius: 12px; color: white; font-size: 1rem; margin: 1rem 0; }
+        .btn-main { background: var(--primary); color: white; border: none; padding: 1rem 2.5rem; border-radius: 12px; font-weight: 700; cursor: pointer; width: 100%; }
+        #app { display: none; }
+        #greeting { margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between; }
+        .topics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .topic-card { background: var(--card-bg); padding: 2rem; border-radius: 20px; border: 1px solid var(--border); cursor: pointer; transition: 0.3s; }
+        .topic-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .content-panel { display: none; background: var(--card-bg); border-radius: 24px; border: 1px solid var(--border); padding: 2rem; animation: fadeIn 0.5s; }
+        .tabs { display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; position: sticky; top: 0; background: var(--card-bg); z-index: 10; }
+        .tab-btn { background: none; border: none; color: var(--text-dim); padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; }
+        .tab-btn.active { color: var(--primary); border: 1px solid var(--primary); background: rgba(99,102,241,0.1); }
+        .theory-section { display: none; }
+        .theory-section.active { display: block; }
+        .theory-item { background: var(--bg); padding: 1.5rem; border-radius: 16px; margin-bottom: 1.5rem; border-left: 4px solid var(--primary); }
+        .theory-item h4 { color: var(--primary); margin-bottom: 0.5rem; font-size: 0.8rem; }
+        .quiz-container { display: none; max-width: 600px; margin: 0 auto; }
+        .quiz-container.active { display: block; }
+        .options-grid { display: grid; gap: 1rem; margin-top: 1.5rem; }
+        .option-btn { background: var(--card-bg); border: 1px solid var(--border); color: white; padding: 1rem; border-radius: 12px; cursor: pointer; text-align: left; transition: 0.2s; }
+        .option-btn:hover { border-color: var(--primary); }
+        .option-btn.correct { background: var(--success); }
+        .option-btn.wrong { background: var(--error); }
+        .solution-toggle { margin-top: 10px; color: var(--primary); background: none; border: 1px solid var(--primary); padding: 5px 12px; border-radius: 6px; cursor: pointer; }
+        .solution-content { display: none; margin-top: 10px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px; color: #a5f3fc; }
+        footer { margin-top: 4rem; text-align: center; color: var(--text-dim); }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        td, th { border: 1px solid var(--border); padding: 8px; text-align: center; }
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+    </style>
 </head>
 <body>
-<div class="orb orb1"></div>
-<div class="orb orb2"></div>
-<div class="orb orb3"></div>
-<header>
-  <div class="school-tag">EET N° 3117 "Daniel Oscar Reyes"</div>
-  <h1>Matemática III</h1>
-  <p>1° Año CST / CS &nbsp;·&nbsp; Período 2026</p>
-  <div class="year-badge">Plataforma interactiva de práctica</div>
-</header>
-<div id="welcome-screen">
-  <div class="welcome-card">
-    <h2>¡Bienvenido/a!</h2>
-    <p>Ingresá tu nombre para comenzar a practicar</p>
-    <input type="text" id="name-input" placeholder="Tu nombre completo" maxlength="40" onkeydown="if(event.key==='Enter')startApp()">
-    <button class="btn-primary" onclick="startApp()">Comenzar →</button>
-  </div>
+<div class="container">
+    <header>
+        <div class="badge">EET N° 3117 "Daniel Oscar Reyes"</div>
+        <h1>Matemática III</h1>
+    </header>
+
+    <div id="login-view">
+        <h2>Bienvenido</h2>
+        <input type="text" id="user-name" placeholder="Tu nombre...">
+        <button class="btn-main" onclick="startApp()">Comenzar</button>
+    </div>
+
+    <div id="app">
+        <div id="greeting">
+            <h2 id="welcome-msg"></h2>
+            <div style="font-weight:bold; color:var(--primary)">Puntaje: <span id="total-score">0</span></div>
+        </div>
+
+        <div class="topics-grid">
+            <div class="topic-card" onclick="showTopic('pol')"><h3>📐 Polinomios</h3></div>
+            <div class="topic-card" onclick="showTopic('ruf')"><h3>➗ Ruffini</h3></div>
+            <div class="topic-card" onclick="showTopic('res')"><h3>🧮 Resto</h3></div>
+            <div class="topic-card" onclick="showTopic('sis')"><h3>⚖️ Sistemas</h3></div>
+            <div class="topic-card" onclick="showTopic('fun')"><h3>📈 Funciones</h3></div>
+            <div class="topic-card" onclick="showTopic('fac')"><h3>🔢 Factoreo</h3></div>
+            <div class="topic-card" onclick="showTopic('irr')"><h3>🟰 Irracionales</h3></div>
+            <div class="topic-card" onclick="showTopic('com')"><h3>🔷 Complejos</h3></div>
+        </div>
+
+        <!-- PANEL IRRACIONALES ACTUALIZADO -->
+        <div id="panel-irr" class="content-panel">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showSub('irr','theory')">Teoría Completa</button>
+                <button class="tab-btn" onclick="showSub('irr','quiz')">Ejercicios</button>
+                <button class="tab-btn" style="margin-left:auto" onclick="home()">Volver</button>
+            </div>
+            <div id="irr-theory" class="theory-section active">
+                <div class="theory-item"><h4>Extracción de Factores</h4><h3>Simplificar √50</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">√50 = √(25·2) = 5√2</div></div>
+                <div class="theory-item"><h4>Suma de Radicales</h4><h3>3√2 + 5√2</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">(3+5)√2 = 8√2</div></div>
+                <div class="theory-item"><h4>Producto</h4><h3>√3 · √12</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">√36 = 6</div></div>
+                <div class="theory-item"><h4>Racionalización (Nuevo)</h4><h3>Quitar raíz del denominador: 1 / √2</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver procedimiento</button><div class="solution-content">Se multiplica por √2/√2:<br>(1·√2)/(√2·√2) = √2 / 2</div></div>
+            </div>
+            <div id="irr-quiz" class="quiz-container">
+                <div class="question-box" id="irr-question" style="background:var(--bg); padding:2rem; border-radius:15px; text-align:center; font-size:1.5rem"></div>
+                <div class="options-grid" id="irr-options"></div>
+                <div id="irr-feedback" style="margin-top:1rem; text-align:center; display:none; padding:1rem; border-radius:10px"></div>
+                <div style="text-align:center; margin-top:1rem; color:var(--primary)">Correctas en este tema: <span id="irr-score">0</span></div>
+            </div>
+        </div>
+
+        <!-- PANEL COMPLEJOS -->
+        <div id="panel-com" class="content-panel">
+            <div class="tabs"><button class="tab-btn active" onclick="showSub('com','theory')">Teoría</button><button class="tab-btn" onclick="showSub('com','quiz')">Ejercicios</button><button class="tab-btn" style="margin-left:auto" onclick="home()">Volver</button></div>
+            <div id="com-theory" class="theory-section active">
+                <div class="theory-item"><h4>Definición</h4><h3>z = a + bi</h3><p>a: parte real, b: parte imaginaria</p></div>
+                <div class="theory-item"><h4>Unidad Imaginaria</h4><h3>i² = -1</h3></div>
+            </div>
+            <div id="com-quiz" class="quiz-container">
+                <div class="question-box" id="com-question" style="background:var(--bg); padding:2rem; border-radius:15px; text-align:center; font-size:1.5rem"></div>
+                <div class="options-grid" id="com-options"></div>
+                <div id="com-feedback" style="margin-top:1rem; text-align:center; display:none; padding:1rem; border-radius:10px"></div>
+                <div style="text-align:center; margin-top:1rem; color:var(--primary)">Correctas en este tema: <span id="com-score">0</span></div>
+            </div>
+        </div>
+        
+        <!-- PANELES DE TEMAS ANTERIORES (Simulados para el código final) -->
+        <div id="panel-pol" class="content-panel"><div class="tabs"><button class="tab-btn active" onclick="showSub('pol','theory')">Teoría</button><button class="tab-btn" onclick="showSub('pol','quiz')">Ejercicios</button><button class="tab-btn" style="margin-left:auto" onclick="home()">Volver</button></div><div id="pol-theory" class="theory-section active"><h3>Polinomios</h3><p>Práctica de grados y sumas.</p></div><div id="pol-quiz" class="quiz-container"><div id="pol-question"></div><div id="pol-options" class="options-grid"></div><div id="pol-score">0</div><div id="pol-feedback"></div></div></div>
+        <div id="panel-ruf" class="content-panel"><div class="tabs"><button class="tab-btn active" onclick="showSub('ruf','theory')">Teoría</button><button class="tab-btn" onclick="showSub('ruf','quiz')">Ejercicios</button><button class="tab-btn" style="margin-left:auto" onclick="home()">Volver</button></div><div id="ruf-theory" class="theory-section active"><h3>Ruffini</h3><p>División rápida.</p></div><div id="ruf-quiz" class="quiz-container"><div id="ruf-question"></div><div id="ruf-options" class="options-grid"></div><div id="ruf-score">0</div><div id="ruf-feedback"></div></div></div>
+        <div id="panel-res" class="content-panel"><div class="tabs"><button class="tab-btn active" onclick="showSub('res','theory')">Teoría</button><button class="tab-btn" onclick="showSub('res','quiz')">Ejercicios</button><button class="tab-btn" style="margin-left:auto" onclick="home()">Volver</button></div><div id="res-theory" class="theory-section active"><h3>Teorema del Resto</h3><p>P(a) = Resto</p></div><div id="res-quiz" class="quiz-container"><div id="res-question"></div><div id="res-options" class="options-grid"></div><div id="res-score">0</div><div id="res-feedback"></div></div></div>
+        <div id="panel-sis" class="content-panel"><div class="tabs"><button class="tab-btn active" onclick="showSub('sis','theory')">Teoría</button><button class="tab-btn" onclick="showSub('sis','quiz')">Ejercicios</button><button class="tab-btn" style="margin-left:auto" onclick="home()">Volver</button></div><div id="sis-theory" class="theory-section active"><h3>Sistemas</h3><p>2x2: Métodos de resolución.</p></div><div id="sis-quiz" class="quiz-container"><div id="sis-question"></div><div id="sis-options" class="options-grid"></div><div id="sis-score">0</div><div id="sis-feedback"></div></div></div>
+        <div id="panel-fun" class="content-panel"><div class="tabs"><button class="tab-btn active" onclick="showSub('fun','theory')">Teoría</button><button class="tab-btn" onclick="showSub('fun','quiz')">Ejercicios</button><button class="tab-btn" style="margin-left:auto" onclick="home()">Volver</button></div><div id="fun-theory" class="theory-section active"><h3>Funciones</h3><p>Gráficas y dominio.</p></div><div id="fun-quiz" class="quiz-container"><div id="fun-question"></div><div id="fun-options" class="options-grid"></div><div id="fun-score">0</div><div id="fun-feedback"></div></div></div>
+        <div id="panel-fac" class="content-panel"><div class="tabs"><button class="tab-btn active" onclick="showSub('fac','theory')">Teoría</button><button class="tab-btn" onclick="showSub('fac','quiz')">Ejercicios</button><button class="tab-btn" style="margin-left:auto" onclick="home()">Volver</button></div><div id="fac-theory" class="theory-section active"><h3>Factorización</h3><p>Factor común, trinomios.</p></div><div id="fac-quiz" class="quiz-container"><div id="fac-question"></div><div id="fac-options" class="options-grid"></div><div id="fac-score">0</div><div id="fac-feedback"></div></div></div>
+
+    </div>
+
+    <footer>
+        EET N° 3117 · Práctica Matemática III<br>
+        <div style="margin-top:10px">
+            <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fvictorsoria800-cmd.github.io%2Fmatematica3%2F&count_bg=%236366F1&title_bg=%231E293B&icon=&icon_color=%23E7E7E7&title=visitas&edge_flat=false"/></a>
+        </div>
+    </footer>
 </div>
-<div id="greeting">
-  <h2>Hola, <span id="student-name"></span> 👋</h2>
-  <p style="color:var(--muted);font-size:14px;margin-top:6px">Elegí un tema para practicar</p>
-</div>
-<div id="app">
-  <div class="topics-grid">
-    <button class="topic-btn" onclick="showTopic('polinomios',event)"><span class="topic-icon">📐</span><h3>Polinomios</h3><p>Operaciones y propiedades</p></button>
-    <button class="topic-btn" onclick="showTopic('ruffini',event)"><span class="topic-icon">➗</span><h3>Regla de Ruffini</h3><p>División de polinomios</p></button>
-    <button class="topic-btn" onclick="showTopic('resto',event)"><span class="topic-icon">🧮</span><h3>Teorema del Resto</h3><p>Resto sin dividir</p></button>
-    <button class="topic-btn" onclick="showTopic('sistemas',event)"><span class="topic-icon">⚖️</span><h3>Sistemas de Ecuaciones</h3><p>Sustitución, Gauss y más</p></button>
-    <button class="topic-btn" onclick="showTopic('funciones',event)"><span class="topic-icon">📈</span><h3>Funciones</h3><p>Dominio, imagen, gráficas</p></button>
-    <button class="topic-btn" onclick="showTopic('factorizacion',event)"><span class="topic-icon">🔢</span><h3>Factorización</h3><p>Factor común y casos</p></button>
-    <button class="topic-btn" onclick="showTopic('irracionales',event)"><span class="topic-icon">🟰</span><h3>Números Irracionales</h3><p>Operaciones y propiedades</p></button>
-    <button class="topic-btn" onclick="showTopic('complejos',event)"><span class="topic-icon">🔷</span><h3>Números Complejos</h3><p>Operaciones y gráfica</p></button>
-  </div>
-  <div class="score-bar" id="score-bar" style="display:none">
-    <span>Puntaje total:</span><span class="score-val" id="score-val">0</span><span>respuestas correctas</span>
-    <div style="flex:1"></div>
-    <div style="width:120px"><div class="progress-wrap"><div class="progress-bar" id="prog-bar" style="width:0%"></div></div>
-    <p style="font-size:11px;color:var(--muted);text-align:right;margin-top:2px" id="prog-text">0 / 0</p></div>
-  </div>
 
-  <!-- POLINOMIOS -->
-  <div id="panel-polinomios" class="content-panel">
-    <div class="subtabs">
-      <button class="stab active" onclick="showSub('pol','teoria',event)">Teoría</button>
-      <button class="stab" onclick="showSub('pol','ejercicios',event)">Ejercicios</button>
-    </div>
-    <div id="pol-teoria">
-      <div class="sec"><span class="sec-label label-blue">Concepto</span><h3>¿Qué es un polinomio?</h3>
-        <p style="font-size:14px;color:var(--muted);line-height:1.8">Un polinomio es una expresión algebraica de la forma:</p>
-        <div class="mblock">P(x) = aₙxⁿ + aₙ₋₁xⁿ⁻¹ + … + a₁x + a₀</div>
-        <p style="font-size:13px;color:var(--muted);line-height:1.8">donde aₙ ≠ 0 es el coeficiente líder y n es el grado del polinomio.</p>
-      </div>
-      <div class="sec"><span class="sec-label label-blue">Ejemplo resuelto</span><h3>Suma: P(x) = 3x² + 2x − 1 y Q(x) = x² − 5x + 4</h3>
-        <button class="btn-toggle" onclick="toggleSol(this)">Ver solución</button>
-        <div class="solution">
-          <div class="step"><strong>Paso 1.</strong><p>Agrupamos términos semejantes:</p></div>
-          <div class="step"><strong>Paso 2.</strong><span class="mi">(3+1)x² + (2−5)x + (−1+4)</span></div>
-          <div class="step"><strong>Resultado:</strong><span class="mi">4x² − 3x + 3</span></div>
-        </div>
-      </div>
-      <div class="sec"><span class="sec-label label-blue">Ejemplo resuelto</span><h3>Multiplicación: (x + 2)(x − 3)</h3>
-        <button class="btn-toggle" onclick="toggleSol(this)">Ver solución</button>
-        <div class="solution">
-          <div class="step"><strong>Distributiva:</strong><span class="mi">x·x + x·(−3) + 2·x + 2·(−3)</span></div>
-          <div class="step"><span class="mi">= x² − 3x + 2x − 6</span></div>
-          <div class="step"><strong>Resultado:</strong><span class="mi">x² − x − 6</span></div>
-        </div>
-      </div>
-    </div>
-    <div id="pol-ejercicios" style="display:none"><div id="quiz-pol"></div></div>
-  </div>
-
-  <!-- RUFFINI -->
-  <div id="panel-ruffini" class="content-panel">
-    <div class="subtabs">
-      <button class="stab active" onclick="showSub('ruf','teoria',event)">Teoría</button>
-      <button class="stab" onclick="showSub('ruf','ejercicios',event)">Ejercicios</button>
-    </div>
-    <div id="ruf-teoria">
-      <div class="sec"><span class="sec-label label-purple">Método</span><h3>¿Cómo aplicar la Regla de Ruffini?</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.8">Para dividir P(x) por (x − a): se escriben los coeficientes de P(x) en una fila, se opera con el valor a, y el último número es el resto.</p>
-        <div class="mblock">1) Escribir coeficientes (incluir 0 para términos faltantes)<br>2) Bajar el primer coeficiente<br>3) Multiplicar por a, sumar al siguiente<br>4) Repetir → último valor = RESTO</div>
-      </div>
-      <div class="sec"><span class="sec-label label-purple">Ejemplo 1</span><h3>Dividir x³ − 6x² + 11x − 6 entre (x − 1)</h3>
-        <button class="btn-toggle" onclick="toggleSol(this)">Ver tablero</button>
-        <div class="solution">
-          <p style="font-size:13px;color:var(--muted);margin-bottom:8px">Coeficientes: 1, −6, 11, −6 | a = 1</p>
-          <table class="rtable">
-            <tr><td class="rh">1</td><td>1</td><td>−6</td><td>11</td><td>−6</td></tr>
-            <tr><td class="rm"></td><td class="rm"></td><td>↓ 1</td><td>↓ −5</td><td>↓ 6</td></tr>
-            <tr><td class="rm"></td><td class="rr">1</td><td class="rr">−5</td><td class="rr">6</td><td class="rr">0</td></tr>
-          </table>
-          <div class="step"><strong>Cociente:</strong><span class="mi">x² − 5x + 6</span> | <strong>Resto:</strong><span class="mi">0</span></div>
-        </div>
-      </div>
-      <div class="sec"><span class="sec-label label-purple">Ejemplo 2</span><h3>Dividir 2x³ + 3x² − 5x + 1 entre (x − 2)</h3>
-        <button class="btn-toggle" onclick="toggleSol(this)">Ver tablero</button>
-        <div class="solution">
-          <table class="rtable">
-            <tr><td class="rh">2</td><td>2</td><td>3</td><td>−5</td><td>1</td></tr>
-            <tr><td class="rm"></td><td class="rm"></td><td>↓ 4</td><td>↓ 14</td><td>↓ 18</td></tr>
-            <tr><td class="rm"></td><td class="rr">2</td><td class="rr">7</td><td class="rr">9</td><td class="rr">19</td></tr>
-          </table>
-          <div class="step"><strong>Cociente:</strong><span class="mi">2x² + 7x + 9</span> | <strong>Resto:</strong><span class="mi">19</span></div>
-        </div>
-      </div>
-    </div>
-    <div id="ruf-ejercicios" style="display:none"><div id="quiz-ruf"></div></div>
-  </div>
-
-  <!-- TEOREMA DEL RESTO -->
-  <div id="panel-resto" class="content-panel">
-    <div class="subtabs">
-      <button class="stab active" onclick="showSub('res','teoria',event)">Teoría</button>
-      <button class="stab" onclick="showSub('res','ejercicios',event)">Ejercicios</button>
-    </div>
-    <div id="res-teoria">
-      <div class="sec"><span class="sec-label label-green">Enunciado</span><h3>Teorema del Resto</h3>
-        <div class="mblock">Si P(x) se divide por (x − a),<br>el resto = P(a)</div>
-        <p style="font-size:13px;color:var(--muted);line-height:1.8">No hace falta dividir. Basta evaluar el polinomio en x = a.</p>
-      </div>
-      <div class="sec"><span class="sec-label label-green">Ejemplo 1</span><h3>P(x) = x³ − 2x² + 3x − 4, divisor (x − 1). Encontrar el resto.</h3>
-        <button class="btn-toggle" onclick="toggleSol(this)">Ver solución</button>
-        <div class="solution">
-          <div class="step"><span class="mi">P(1) = 1 − 2 + 3 − 4 = −2</span></div>
-          <div class="step"><strong>Resto = −2</strong></div>
-        </div>
-      </div>
-      <div class="sec"><span class="sec-label label-green">Ejemplo 2</span><h3>P(x) = x³ + kx − 6. Si x = 2 es raíz, ¿cuánto vale k?</h3>
-        <button class="btn-toggle" onclick="toggleSol(this)">Ver solución</button>
-        <div class="solution">
-          <div class="step"><span class="mi">8 + 2k − 6 = 0 → k = −1</span></div>
-        </div>
-      </div>
-    </div>
-    <div id="res-ejercicios" style="display:none"><div id="quiz-res"></div></div>
-  </div>
-
-  <!-- SISTEMAS -->
-  <div id="panel-sistemas" class="content-panel">
-    <div class="subtabs">
-      <button class="stab active" onclick="showSub('sis','teoria',event)">Teoría</button>
-      <button class="stab" onclick="showSub('sis','ejercicios',event)">Ejercicios</button>
-    </div>
-    <div id="sis-teoria">
-      <div class="sec"><span class="sec-label label-orange">Método 1 — Sustitución</span><h3>Resolver: 2x + y = 7 y x − y = 2</h3>
-        <button class="btn-toggle" onclick="toggleSol(this)">Ver solución</button>
-        <div class="solution">
-          <div class="step"><strong>Paso 1.</strong><p>De la 2.ª: <span class="mi">x = y + 2</span></p></div>
-          <div class="step"><strong>Paso 2.</strong><span class="mi">2(y+2)+y=7 → y=1</span></div>
-          <div class="step"><strong>Solución:</strong><span class="mi">x=3, y=1</span></div>
-        </div>
-      </div>
-      <div class="sec"><span class="sec-label label-orange">Método 2 — Eliminación</span><h3>Resolver: 3x + 2y = 12 y x − 2y = 0</h3>
-        <button class="btn-toggle" onclick="toggleSol(this)">Ver solución</button>
-        <div class="solution">
-          <div class="step"><span class="mi">4x = 12 → x = 3, y = 3/2</span></div>
-        </div>
-      </div>
-      <div class="sec"><span class="sec-label label-orange">Método de Gauss</span><h3>¿Cómo funciona el método de Gauss?</h3>
-        <div class="mblock">F_i ↔ F_j (intercambiar filas)<br>F_i → k·F_i (multiplicar por escalar k≠0)<br>F_i → F_i + k·F_j (sumar múltiplo de otra fila)</div>
-      </div>
-    </div>
-    <div id="sis-ejercicios" style="display:none"><div id="quiz-sis"></div></div>
-  </div>
-
-  <!-- FUNCIONES -->
-  <div id="panel-funciones" class="content-panel">
-    <div class="subtabs">
-      <button class="stab active" onclick="showSub('fun','teoria',event)">Teoría</button>
-      <button class="stab" onclick="showSub('fun','ejercicios',event)">Ejercicios</button>
-    </div>
-    <div id="fun-teoria">
-      <div class="sec"><span class="sec-label label-blue">Concepto</span><h3>¿Qué es una función?</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.8">Una función f: A → B asigna a cada elemento del dominio A exactamente un elemento del codominio B.</p>
-        <div class="mblock">f(x) = 2x + 1 → a cada x le corresponde un único valor</div>
-      </div>
-      <div class="sec"><span class="sec-label label-blue">Ejemplo — Dominio</span><h3>f(x) = √(x − 3). ¿Cuál es el dominio?</h3>
-        <button class="btn-toggle" onclick="toggleSol(this)">Ver solución</button>
-        <div class="solution">
-          <div class="step"><span class="mi">x − 3 ≥ 0 → x ≥ 3</span></div>
-          <div class="step"><strong>Dominio:</strong><span class="mi">[3, +∞)</span></div>
-        </div>
-      </div>
-    </div>
-    <div id="fun-ejercicios" style="display:none"><div id="quiz-fun"></div></div>
-  </div>
-
-  <!-- FACTORIZACION -->
-  <div id="panel-factorizacion" class="content-panel">
-    <div class="subtabs">
-      <button class="stab active" onclick="showSub('fac','teoria',event)">Teoría</button>
-      <button class="stab" onclick="showSub('fac','ejercicios',event)">Ejercicios</button>
-    </div>
-    <div id="fac-teoria">
-      <div class="sec"><span class="sec-label label-green">Factor común</span><h3>Factorizar: 6x³ − 9x² + 3x</h3>
-        <button class="btn-toggle" onclick="toggleSol(this)">Ver solución</button>
-        <div class="solution">
-          <div class="step"><span class="mi">3x(2x² − 3x + 1) = 3x(2x−1)(x−1)</span></div>
-        </div>
-      </div>
-      <div class="sec"><span class="sec-label label-green">Diferencia de cuadrados</span><h3>Factorizar: 4x² − 25</h3>
-        <button class="btn-toggle" onclick="toggleSol(this)">Ver solución</button>
-        <div class="solution">
-          <div class="step"><span class="mi">(2x+5)(2x−5)</span></div>
-        </div>
-      </div>
-      <div class="sec"><span class="sec-label label-green">Trinomio cuadrado perfecto</span><h3>Factorizar: x² + 6x + 9</h3>
-        <button class="btn-toggle" onclick="toggleSol(this)">Ver solución</button>
-        <div class="solution">
-          <div class="step"><span class="mi">(x+3)²</span></div>
-        </div>
-      </div>
-    </div>
-    <div id="fac-ejercicios" style="display:none"><div id="quiz-fac"></div></div>
-  </div>
-
-  <!-- IRRACIONALES -->
-  <div id="panel-irracionales" class="content-panel">
-    <div class="subtabs">
-      <button class="stab active" onclick="showSub('irr','teoria',event)">Teoría</button>
-      <button class="stab" onclick="showSub('irr','ejercicios',event)">Ejercicios</button>
-    </div>
-    <div id="irr-teoria">
-      <div class="sec"><span class="sec-label label-blue">Concepto</span><h3>¿Qué son los números irracionales?</h3>
-        <p style="font-size:14px;color:var(--muted);line-height:1.8">Son números que no pueden expresarse como fracción. Su decimal es infinito y no periódico.</p>
-        <div class="mblock">Ejemplos: √2, √3, π (Pi), e</div>
-      </div>
-      <div class="sec"><span class="sec-label label-blue">Extracción de Factores</span><h3>Simplificar: √50</h3>
-        <button class="btn-toggle" onclick="toggleSol(this)">Ver solución</button>
-        <div class="solution">
-          <div class="step"><span class="mi">50 = 2 · 5²</span></div>
-          <div class="step"><span class="mi">√50 = 5√2</span></div>
-        </div>
-      </div>
-      <div class="sec"><span class="sec-label label-blue">Suma de radicales</span><h3>Simplificar: 3√2 + 5√2</h3>
-        <button class="btn-toggle" onclick="toggleSol(this)">Ver solución</button>
-        <div class="solution">
-          <div class="step"><p>Se suman los coeficientes cuando el radicando es igual:</p></div>
-          <div class="step"><span class="mi">3√2 + 5√2 = 8√2</span></div>
-        </div>
-      </div>
-      <div class="sec"><span class="sec-label label-blue">Multiplicación de radicales</span><h3>Calcular: √3 · √12</h3>
-        <button class="btn-toggle" onclick="toggleSol(this)">Ver solución</button>
-        <div class="solution">
-          <div class="step"><span class="mi">√3 · √12 = √36 = 6</span></div>
-        </div>
-      </div>
-    </div>
-    <div id="irr-ejercicios" style="display:none"><div id="quiz-irr"></div></div>
-  </div>
-
-  <!-- COMPLEJOS -->
-  <div id="panel-complejos" class="content-panel">
-    <div class="stabs">
-      <button class="stab active" onclick="showSub('com','teoria',event)">Teoría</button>
-      <button class="stab" onclick="showSub('com','ejercicios',event)">Ejercicios</button>
-    </div>
-    <div id="com-teoria">
-      <h2>Números Complejos</h2>
-      <p>Un número complejo tiene la forma <strong>z = a + bj</strong>, donde <em>a</em> es la parte real, <em>b</em> la parte imaginaria y <strong>j = √(−1)</strong> (en electrónica se usa <em>j</em> en lugar de <em>i</em>).</p>
-
-      <h3>Potencias de j</h3>
-      <table class="rtable"><tr><th>Potencia</th><th>Valor</th></tr>
-        <tr><td>j¹</td><td>j</td></tr>
-        <tr><td>j²</td><td>−1</td></tr>
-        <tr><td>j³</td><td>−j</td></tr>
-        <tr><td>j⁴</td><td>1</td></tr>
-        <tr><td>j⁵</td><td>j (ciclo se repite)</td></tr>
-      </table>
-      <p><strong>Regla:</strong> dividí el exponente por 4 y usá el resto: 0→1, 1→j, 2→−1, 3→−j.</p>
-
-      <h3>Suma y Resta</h3>
-      <p>Se suman/restan partes reales entre sí e imaginarias entre sí:</p>
-      <p><strong>(a + bj) ± (c + dj) = (a±c) + (b±d)j</strong></p>
-      <p>Ejemplo: (3 + 5j) + (2 − 3j) = <strong>5 + 2j</strong></p>
-      <p>Ejemplo: (7 − 2j) − (4 + 6j) = <strong>3 − 8j</strong></p>
-
-      <h3>Multiplicación</h3>
-      <p>Se aplica la propiedad distributiva y se reemplaza j² = −1:</p>
-      <p>(a + bj)(c + dj) = ac + adj + bcj + bdj² = <strong>(ac−bd) + (ad+bc)j</strong></p>
-      <p>Ejemplo: (2 + 3j)(1 − 4j) = 2 − 8j + 3j − 12j² = 2 − 5j + 12 = <strong>14 − 5j</strong></p>
-      <p><strong>Conjugado:</strong> z̄ = a − bj → z · z̄ = a² + b² (número real)</p>
-
-      <h3>División</h3>
-      <p>Se multiplica numerador y denominador por el <strong>conjugado del denominador</strong>:</p>
-      <p style="text-align:center"><strong>(a+bj)/(c+dj) = [(a+bj)(c−dj)] / (c²+d²)</strong></p>
-      <p>Ejemplo: (3+2j)/(1+4j) · (1−4j)/(1−4j) = (3−12j+2j−8j²)/(1+16) = (11−10j)/17 = <strong>0,647 − 0,588j</strong></p>
-
-      <h3>Módulo y Argumento</h3>
-      <p><strong>Módulo:</strong> |z| = √(a² + b²) → representa la magnitud del fasor.</p>
-      <p><strong>Argumento:</strong> θ = arctan(b/a), ajustado según el cuadrante:</p>
-      <table class="rtable"><tr><th>Cuadrante</th><th>a</th><th>b</th><th>θ</th></tr>
-        <tr><td>I</td><td>&gt;0</td><td>&gt;0</td><td>arctan(b/a)</td></tr>
-        <tr><td>II</td><td>&lt;0</td><td>&gt;0</td><td>180° + arctan(b/a)</td></tr>
-        <tr><td>III</td><td>&lt;0</td><td>&lt;0</td><td>180° + arctan(b/a)</td></tr>
-        <tr><td>IV</td><td>&gt;0</td><td>&lt;0</td><td>360° + arctan(b/a)</td></tr>
-      </table>
-
-      <h3>Forma Polar ↔ Rectangular</h3>
-      <p><strong>Rectangular → Polar:</strong> z = a + bj → z = r∠θ, donde r = |z|, θ = arg(z)</p>
-      <p><strong>Polar → Rectangular:</strong> z = r∠θ → a = r·cos(θ), b = r·sin(θ)</p>
-      <p>Ejemplo: z = 3 + 4j → r = √(9+16) = 5, θ = arctan(4/3) ≈ 53,13° → <strong>z = 5∠53,13°</strong></p>
-      <p>Ejemplo: z = 10∠30° → a = 10·cos30° ≈ 8,66, b = 10·sin30° = 5 → <strong>z = 8,66 + 5j</strong></p>
-
-      <h3>Producto y División en Forma Polar (Fasores)</h3>
-      <p><strong>Producto:</strong> r₁∠θ₁ · r₂∠θ₂ = <strong>(r₁·r₂)∠(θ₁+θ₂)</strong></p>
-      <p><strong>División:</strong> r₁∠θ₁ / r₂∠θ₂ = <strong>(r₁/r₂)∠(θ₁−θ₂)</strong></p>
-      <p>Ejemplo (Ley de Ohm fasorial): V = Z · I → 10∠30° · 2∠45° = <strong>20∠75°</strong></p>
-      <p>Ejemplo: Z = V/I = 120∠0° / 6∠−30° = <strong>20∠30° Ω</strong></p>
-
-      <h3>Fórmula de Euler</h3>
-      <p><strong>z = r·e^(jθ) = r(cosθ + j·sinθ)</strong></p>
-      <p>Esta forma es fundamental en análisis de circuitos AC y transformadas de Fourier.</p>
-    </div>
-    <div id="com-ejercicios" style="display:none"><div id="quiz-com"></div></div>
-  </div>
-
-</div>
-<footer>
-  <p>Matemática III &nbsp;·&nbsp; EET N° 3117 "Daniel Oscar Reyes" &nbsp;·&nbsp; 2026</p>
-  <div style="margin-top:12px">
-    <img src="https://visitor-badge.laobi.icu/badge?page_id=victorsoria800-cmd.matematica3" alt="Contador de visitas" style="height:22px;border-radius:6px">
-  </div>
-</footer>
 <script>
-var score = 0;
-var totalAnswered = 0;
-var studentName = '';
-var quizzes = {
-  pol: [
-    {q:'¿Cuál es el grado de P(x) = 3x⁴ − 2x² + 7?',opts:['2','3','4','5'],ans:2,exp:'El grado es la mayor potencia de x, que es 4.'},
-    {q:'¿Cuánto vale P(2) si P(x) = x² − 3x + 1?',opts:['−1','3','0','−3'],ans:0,exp:'P(2) = 4 − 6 + 1 = −1'},
-    {q:'El coeficiente líder de −5x³ + 2x − 8 es:',opts:['−8','2','−5','3'],ans:2,exp:'El coeficiente líder es el de la mayor potencia: −5'},
-    {q:'(x+3)(x−3) es igual a:',opts:['x²+9','x²−9','x²+6x+9','x²−6x+9'],ans:1,exp:'Diferencia de cuadrados: x²−9'},
-    {q:'Si P(x)=2x²+x y Q(x)=x²−3x, entonces P(x)+Q(x) es:',opts:['3x²−2x','3x²+4x','x²−2x','x²+4x'],ans:0,exp:'(2+1)x² + (1−3)x = 3x²−2x'},
-  ],
-  ruf: [
-    {q:'Al dividir P(x)=x³−6x²+11x−6 por (x−1), el resto es:',opts:['0','1','−1','6'],ans:0,exp:'Por Ruffini con a=1: el último valor es 0.'},
-    {q:'Los coeficientes de x⁴−16 para Ruffini son:',opts:['1,−16','1,0,−16','1,0,0,0,−16','1,0,0,−16'],ans:2,exp:'x⁴+0x³+0x²+0x−16 → 1,0,0,0,−16'},
-    {q:'Al dividir 2x³+3x²−5x+1 por (x−2), el resto es:',opts:['0','3','19','−19'],ans:2,exp:'Por Ruffini con a=2: resto=19'},
-    {q:'Si el resto de dividir P(x) por (x−a) es 0, entonces:',opts:['a es raíz de P(x)','a no es raíz','P(a)=1','El cociente es 0'],ans:0,exp:'Resto=0 ↔ P(a)=0 ↔ a es raíz.'},
-    {q:'El cociente de (x³−6x²+11x−6)÷(x−1) es:',opts:['x²−5x+6','x²+5x−6','x²−5x−6','x²+5x+6'],ans:0,exp:'Ruffini da coeficientes 1, −5, 6 → x²−5x+6'},
-  ],
-  res: [
-    {q:'P(x)=x³−4x+3. ¿Cuál es el resto al dividir por (x−2)?',opts:['0','3','−3','7'],ans:1,exp:'P(2)=8−8+3=3.'},
-    {q:'Si P(a)=0, entonces:',opts:['a NO es raíz','a es raíz y (x−a) divide P(x)','El resto es 1','P(x)=0 para todo x'],ans:1,exp:'P(a)=0 significa que (x−a) divide exactamente a P(x).'},
-    {q:'P(x)=x²−5x+6. ¿Es x=2 raíz?',opts:['Sí, P(2)=0','No, P(2)=−4','No, P(2)=4','Sí, P(2)=1'],ans:0,exp:'P(2)=4−10+6=0 → Sí.'},
-    {q:'P(x)=x³+kx−6 y x=2 es raíz. ¿Cuánto vale k?',opts:['1','−1','2','−2'],ans:1,exp:'8+2k−6=0 → k=−1'},
-    {q:'El resto de (2x²+x−3)÷(x+1) es:',opts:['0','−2','2','−4'],ans:1,exp:'P(−1)=2−1−3=−2. Resto=−2.'},
-    {q:'¿Cuánto vale P(0) para P(x)=5x³−3x+7?',opts:['5','−3','7','0'],ans:2,exp:'P(0)=7'},
-  ],
-  sis: [
-    {q:'Resolver: x+y=5 | x−y=1. ¿Cuánto vale x?',opts:['2','3','4','1'],ans:1,exp:'2x=6 → x=3.'},
-    {q:'Resolver: 2x+y=7 | x−y=2. ¿Cuánto vale y?',opts:['1','2','3','4'],ans:0,exp:'3y=3 → y=1.'},
-    {q:'¿Qué método se usa cuando una variable se despeja fácilmente?',opts:['Eliminación','Sustitución','Reducción','Igualación'],ans:1,exp:'Método de sustitución.'},
-    {q:'El sistema x+y=4 | x+y=7 tiene:',opts:['Solución única','Infinitas soluciones','Sin solución','Solución nula'],ans:2,exp:'Ecuaciones paralelas → sin solución.'},
-    {q:'Resolver: 3x+2y=12 | x−2y=0. ¿Cuánto vale x?',opts:['1','2','3','4'],ans:2,exp:'4x=12 → x=3.'},
-    {q:'Resolver: 4x−y=10 | 2x+y=8. ¿Cuánto vale x?',opts:['2','3','4','1'],ans:1,exp:'6x=18 → x=3.'},
-    {q:'El sistema 2x+4y=8 | x+2y=4 tiene:',opts:['Solución única','Infinitas soluciones','Sin solución','Solo x=0'],ans:1,exp:'Son la misma recta → infinitas soluciones.'},
-    {q:'Resolver por sustitución: y=2x | x+y=9. ¿Cuánto vale x?',opts:['2','3','4','6'],ans:1,exp:'3x=9 → x=3.'},
-    {q:'Resolver: 5x−3y=1 | x+3y=11. ¿Cuánto vale x?',opts:['1','2','3','4'],ans:1,exp:'6x=12 → x=2.'},
-    {q:'En el método de Gauss, el objetivo es transformar la matriz a forma:',opts:['Diagonal','Triangular superior','Cuadrada','Identidad'],ans:1,exp:'Forma triangular superior, luego sustitución regresiva.'},
-    {q:'Sistema 3×3: x+y+z=6 | x−y+z=2 | x+y−z=4. ¿Cuánto vale x?',opts:['1','2','3','4'],ans:2,exp:'y=2, z=1, x=3.'},
-    {q:'¿Qué operación NO está permitida en Gauss?',opts:['Multiplicar fila por escalar ≠0','Intercambiar filas','Sumar múltiplos de una fila','Dividir dos filas entre sí'],ans:3,exp:'Dividir filas entre sí no es operación elemental válida.'},
-    {q:'Resolver: 2x−y=4 | x+y=5. ¿Cuánto vale x+y?',opts:['3','4','5','6'],ans:2,exp:'x=3, y=2, x+y=5.'},
-    {q:'¿Cuántas soluciones tiene x+2y=6 | 2x+4y=10?',opts:['Una','Ninguna','Infinitas','Dos'],ans:1,exp:'2x+4y=12 ≠ 10 → sin solución.'},
-    {q:'Sistema 3×3: x+y=4 | y+z=5 | x+z=3. ¿Cuánto vale x?',opts:['0','1','2','3'],ans:1,exp:'x+y+z=6, z=2, y=3, x=1.'},
-  ],
-  fun: [
-    {q:'¿Cuál es el dominio de f(x)=√(x−4)?',opts:['x≥4','x>4','x≤4','Todos los reales'],ans:0,exp:'x−4≥0 → x≥4.'},
-    {q:'f(x)=2x−1. ¿Cuánto vale f(3)?',opts:['5','6','7','4'],ans:0,exp:'f(3)=5.'},
-    {q:'Una función asigna a cada x del dominio:',opts:['Varios valores posibles','Exactamente un valor','Al menos dos valores','Ningún valor'],ans:1,exp:'Exactamente un único valor.'},
-    {q:'f(x)=x²+1. ¿Cuál es el valor mínimo?',opts:['0','1','−1','2'],ans:1,exp:'x²≥0 → mínimo es 1.'},
-    {q:'¿Cuál de estas NO es una función?',opts:['y=x+1','y=x²','y²=x','y=|x|'],ans:2,exp:'y²=x da dos valores para x>0.'},
-    {q:'El dominio de f(x)=1/(x−3) es:',opts:['Todos los reales','x≠3','x>3','x<3'],ans:1,exp:'x≠3.'},
-    {q:'f(x)=x²−4x+4. ¿Para qué x se anula?',opts:['x=−2','x=2','x=4','x=0'],ans:1,exp:'(x−2)²=0 → x=2.'},
-    {q:'Si f(x)=2x+1 y g(x)=x−3, ¿cuánto vale f(g(2))?',opts:['−1','1','3','−3'],ans:0,exp:'g(2)=−1, f(−1)=−1.'},
-    {q:'f(x)=|x|. ¿Cuánto vale f(−5)?',opts:['−5','5','25','0'],ans:1,exp:'|−5|=5.'},
-    {q:'¿Cuál es la imagen de f(x)=x²?',opts:['Todos los reales','x≥0','x>0','x≤0'],ans:1,exp:'[0,+∞).'},
-    {q:'f(x)=√(9−x²). ¿Cuál es el dominio?',opts:['−3≤x≤3','x≥3','x≤−3','x≠0'],ans:0,exp:'[−3, 3].'},
-    {q:'Una función es par si cumple:',opts:['f(−x)=f(x)','f(−x)=−f(x)','f(x)=f(y)','f(0)=0'],ans:0,exp:'f(−x)=f(x).'},
-    {q:'f(x)=2x+3. ¿Cuál es el cero?',opts:['x=−3','x=3/2','x=−3/2','x=2'],ans:2,exp:'2x+3=0 → x=−3/2.'},
-    {q:'g(x)=x²−9. ¿Cuáles son los ceros?',opts:['x=3','x=±3','x=±9','x=9'],ans:1,exp:'x=±3.'},
-    {q:'Si f(x)=3x−1 y g(x)=x+2, ¿cuánto vale (f∘g)(1)?',opts:['5','8','6','4'],ans:1,exp:'g(1)=3, f(3)=8.'},
-    {q:'f(x)=x²+2x+1. Forma factorizada:',opts:['(x+1)²','(x−1)²','(x+1)(x−1)','x(x+2)+1'],ans:0,exp:'(x+1)².'},
-    {q:'¿Cuál es el dominio de f(x)=√(4−x²)?',opts:['x≥2','−2≤x≤2','x≤2','x≠±2'],ans:1,exp:'[−2, 2].'},
-  ],
-  fac: [
-    {q:'Factor común de 4x³+8x²−12x es:',opts:['4x','2x','4x²','2'],ans:0,exp:'Factor: 4x.'},
-    {q:'Factorizar x²−9:',opts:['(x+3)²','(x−3)²','(x+3)(x−3)','(x+9)(x−1)'],ans:2,exp:'(x+3)(x−3).'},
-    {q:'x²+10x+25 es igual a:',opts:['(x+5)²','(x−5)²','(x+5)(x−5)','(x+25)(x+1)'],ans:0,exp:'(x+5)².'},
-    {q:'Factorizar 2x²+4x:',opts:['2(x²+2x)','2x(x+2)','x(2x+4)','2x(x+4)'],ans:1,exp:'2x(x+2).'},
-    {q:'x²−2x−8 factorizado es:',opts:['(x−4)(x+2)','(x+4)(x−2)','(x−4)(x−2)','(x+4)(x+2)'],ans:0,exp:'(x−4)(x+2).'},
-    {q:'Factorizar x³−8:',opts:['(x−2)³','(x−2)(x²+2x+4)','(x+2)(x²−2x+4)','(x−2)(x²−4)'],ans:1,exp:'(x−2)(x²+2x+4).'},
-    {q:'Factorizar 9x²−25:',opts:['(3x−5)²','(3x+5)²','(3x+5)(3x−5)','(9x+5)(x−5)'],ans:2,exp:'(3x+5)(3x−5).'},
-    {q:'Factorizar 6x²+9x:',opts:['3x(2x+3)','6x(x+9)','3(2x²+9x)','x(6x+9)'],ans:0,exp:'3x(2x+3).'},
-    {q:'x²−x−6 factorizado es:',opts:['(x−3)(x+2)','(x+3)(x−2)','(x−3)(x−2)','(x+3)(x+2)'],ans:0,exp:'(x−3)(x+2).'},
-    {q:'Factorizar x³+27:',opts:['(x+3)³','(x+3)(x²−3x+9)','(x−3)(x²+3x+9)','(x+3)(x²+9)'],ans:1,exp:'(x+3)(x²−3x+9).'},
-    {q:'Factorizar completamente 2x³−8x:',opts:['2x(x²−4)','2x(x+2)(x−2)','x(2x²−8)','2(x³−4x)'],ans:1,exp:'2x(x+2)(x−2).'},
-    {q:'x⁴−16 factorizado completamente:',opts:['(x²+4)(x²−4)','(x²+4)(x+2)(x−2)','(x+2)²(x−2)²','(x²−4)²'],ans:1,exp:'(x²+4)(x+2)(x−2).'},
-    {q:'Factorizar x²+5x+6:',opts:['(x+1)(x+6)','(x+2)(x+3)','(x+2)(x−3)','(x−2)(x−3)'],ans:1,exp:'(x+2)(x+3).'},
-    {q:'Factorizar 4x²−12x+9:',opts:['(2x−3)²','(2x+3)²','(4x−3)(x−3)','(2x−3)(2x+3)'],ans:0,exp:'(2x−3)².'},
-    {q:'Factorizar 3x²−3:',opts:['3(x²−1)','3(x+1)(x−1)','3x(x−1)','(3x+1)(x−1)'],ans:1,exp:'3(x+1)(x−1).'},
-    {q:'[COMBINADO] Factorizar completamente 3x³−12x:',opts:['3x(x²−4)','3x(x+2)(x−2)','3(x³−4x)','x(3x²−12)'],ans:1,exp:'3x(x+2)(x−2).'},
-    {q:'[COMBINADO] Factorizar completamente 2x⁴−8x²:',opts:['2x²(x²−4)','2x²(x+2)(x−2)','2x(x³−4x)','4x²(x²−2)'],ans:1,exp:'2x²(x+2)(x−2).'},
-    {q:'[COMBINADO] Factorizar completamente 5x³+10x²−15x:',opts:['5x(x²+2x−3)','5x(x+3)(x−1)','5x(x−3)(x+1)','5(x³+2x²−3x)'],ans:1,exp:'5x(x+3)(x−1).'},
-    {q:'[COMBINADO] Factorizar completamente 4x³−4x:',opts:['4x(x²−1)','4x(x+1)(x−1)','2x(2x²−2)','4x²(x−1)'],ans:1,exp:'4x(x+1)(x−1).'},
-    {q:'[COMBINADO] Factorizar completamente x⁴−81:',opts:['(x²+9)(x²−9)','(x²+9)(x+3)(x−3)','(x+3)²(x−3)²','(x²−9)²'],ans:1,exp:'(x²+9)(x+3)(x−3).'},
-    {q:'[COMBINADO] Factorizar completamente 3x²−6x−9:',opts:['3(x²−2x−3)','3(x−3)(x+1)','3x(x−3)','(3x+3)(x−3)'],ans:1,exp:'3(x−3)(x+1).'},
-    {q:'[COMBINADO] Factorizar completamente 8x³−2x:',opts:['2x(4x²−1)','2x(2x+1)(2x−1)','x(8x²−2)','2(4x³−x)'],ans:1,exp:'2x(2x+1)(2x−1).'},
-  ],
-  irr: [
-    {q:'¿Cuál de estos es un número irracional?',opts:['√4','3/4','√2','0.5'],ans:2,exp:'√2 no puede expresarse como fracción.'},
-    {q:'Simplificar √12 resulta en:',opts:['2√3','3√2','4√3','6'],ans:0,exp:'√12 = √(4·3) = 2√3'},
-    {q:'¿Cuál es el valor aproximado de √2?',opts:['1.41','1.73','2.24','3.14'],ans:0,exp:'√2 ≈ 1.4142'},
-    {q:'Simplificar √75:',opts:['5√3','3√5','15√3','25√3'],ans:0,exp:'75 = 25·3 → √75 = 5√3'},
-    {q:'¿Cuál de estas operaciones da resultado racional?',opts:['√2·√3','√2·√2','√3+√2','π+1'],ans:1,exp:'√2 · √2 = 2, racional.'},
-    {q:'3√2 + 5√2 es igual a:',opts:['8√2','8√4','15√2','8'],ans:0,exp:'Se suman los coeficientes: 8√2.'},
-    {q:'√3 · √12 es igual a:',opts:['√15','6','3√4','√36'],ans:1,exp:'√3·√12 = √36 = 6.'},
-    {q:'¿Cuál de estos NO es irracional?',opts:['π','√5','√9','e'],ans:2,exp:'√9 = 3, que es racional.'},
-  ],
-  com: [
-    // Potencias de j
-    {q:"¿Cuánto vale j²?", opts:["1","−1","j","−j"], ans:1, exp:"j² = −1, por definición de la unidad imaginaria."},
-    {q:"¿Cuánto vale j³?", opts:["1","−1","j","−j"], ans:3, exp:"j³ = j²·j = −1·j = −j."},
-    {q:"¿Cuánto vale j⁴?", opts:["1","−1","j","−j"], ans:0, exp:"j⁴ = (j²)² = (−1)² = 1."},
-    {q:"¿Cuánto vale j⁵?", opts:["1","−1","j","−j"], ans:2, exp:"j⁵ = j⁴·j = 1·j = j."},
-    {q:"¿Cuánto vale j⁶?", opts:["1","−1","j","−j"], ans:1, exp:"j⁶ = j⁴·j² = 1·(−1) = −1."},
-    {q:"¿Cuánto vale j⁸?", opts:["1","−1","j","−j"], ans:0, exp:"j⁸ = (j⁴)² = 1² = 1."},
-    {q:"¿Cuánto vale j¹⁰?", opts:["1","−1","j","−j"], ans:1, exp:"10÷4 = resto 2 → j² = −1."},
-    // Partes y conjugado
-    {q:"En z = 5 − 3j, ¿cuál es la parte real?", opts:["−3","3","5","−5"], ans:2, exp:"La parte real es el término sin j: a = 5."},
-    {q:"En z = 5 − 3j, ¿cuál es la parte imaginaria?", opts:["−3","3","5","−5"], ans:0, exp:"La parte imaginaria es el coeficiente de j: b = −3."},
-    {q:"¿Cuál es el conjugado de z = 4 + 7j?", opts:["4 − 7j","−4 + 7j","−4 − 7j","4 + 7j"], ans:0, exp:"El conjugado cambia el signo de la parte imaginaria: z̄ = 4 − 7j."},
-    {q:"¿Cuál es el conjugado de z = −2 − 5j?", opts:["2 + 5j","−2 + 5j","2 − 5j","−2 − 5j"], ans:1, exp:"z̄ = −2 + 5j (se cambia el signo de −5j)."},
-    {q:"Si z = 6j, ¿cuál es su parte real?", opts:["6","0","−6","j"], ans:1, exp:"z = 0 + 6j, la parte real es 0."},
-    // Suma y resta
-    {q:"(3 + 2j) + (5 + 4j) = ?", opts:["8 + 6j","8 + 2j","2 + 6j","15 + 8j"], ans:0, exp:"Sumamos reales: 3+5=8; imaginarios: 2+4=6 → 8+6j."},
-    {q:"(7 − 3j) + (2 + 5j) = ?", opts:["9 + 2j","5 − 8j","9 − 2j","5 + 2j"], ans:0, exp:"7+2=9; −3+5=2 → 9+2j."},
-    {q:"(4 + 6j) − (1 + 2j) = ?", opts:["3 + 4j","5 + 8j","3 − 4j","5 + 4j"], ans:0, exp:"4−1=3; 6−2=4 → 3+4j."},
-    {q:"(8 − 5j) − (3 − 2j) = ?", opts:["5 − 3j","11 − 7j","5 + 3j","11 + 3j"], ans:0, exp:"8−3=5; −5−(−2)=−3 → 5−3j."},
-    {q:"(−2 + 4j) + (6 − 9j) = ?", opts:["4 − 5j","8 + 5j","−8 + 13j","4 + 5j"], ans:0, exp:"−2+6=4; 4−9=−5 → 4−5j."},
-    {q:"(1 + j) + (1 − j) = ?", opts:["2","2j","0","2 + 2j"], ans:0, exp:"1+1=2; j−j=0 → 2 (número real)."},
-    {q:"(3 + 4j) − (3 + 4j) = ?", opts:["0","6 + 8j","0 + 0j","1"], ans:0, exp:"Cualquier número menos sí mismo es 0."},
-    // Multiplicación
-    {q:"j · j = ?", opts:["1","−1","j²","j"], ans:1, exp:"j · j = j² = −1."},
-    {q:"(2j)(3j) = ?", opts:["6j","−6","6","−6j"], ans:1, exp:"2·3·j² = 6·(−1) = −6."},
-    {q:"(1 + j)(1 − j) = ?", opts:["2","1 − j²","0","1 + j²"], ans:0, exp:"(1)²+(1)² = 1+1 = 2 (producto de conjugados)."},
-    {q:"(2 + 3j)(2 − 3j) = ?", opts:["4 + 9","13","4 − 9","−5"], ans:1, exp:"a²+b² = 4+9 = 13."},
-    {q:"(1 + 2j)(3 + 4j) = ?", opts:["3 + 10j","−5 + 10j","3 + 8j","−5 + 8j"], ans:1, exp:"3+4j+6j+8j²=3+10j−8=−5+10j."},
-    {q:"(2 + j)(3 − 2j) = ?", opts:["8 − j","6 − 2j","8 + j","6 + j"], ans:0, exp:"6−4j+3j−2j²=6−j+2=8−j."},
-    {q:"(3 + 4j)² = ?", opts:["7 + 24j","−7 + 24j","9 + 16j","25"], ans:1, exp:"9+24j+16j²=9+24j−16=−7+24j."},
-    {q:"(1 + j)² = ?", opts:["2j","1 + 2j","2","0"], ans:0, exp:"1+2j+j²=1+2j−1=2j."},
-    {q:"j(2 + 3j) = ?", opts:["2j + 3j²","−3 + 2j","3 + 2j","2j − 3"], ans:1, exp:"2j+3j²=2j−3=−3+2j."},
-    {q:"(4 − j)(4 + j) = ?", opts:["16 + 1","15","17","16 − 1"], ans:2, exp:"4²+1²=16+1=17."},
-    {q:"(0 + 2j)(0 + 5j) = ?", opts:["10j","−10","10","−10j"], ans:1, exp:"2·5·j²=10·(−1)=−10."},
-    {q:"(1 + j)(1 + j)(1 + j) = ?", opts:["−2 + 2j","2 − 2j","2j","−2j"], ans:3, exp:"(1+j)²=2j; 2j(1+j)=2j+2j²=2j−2=−2+2j. Corrección: −2+2j."},
-    // División
-    {q:"(4 + 2j) / 2 = ?", opts:["2 + j","2 + 2j","4 + j","2j"], ans:0, exp:"Se divide cada término: 4/2 + 2j/2 = 2 + j."},
-    {q:"(6 + 3j) / (1 + 0j) = ?", opts:["6 + 3j","3 + 6j","6 − 3j","3j"], ans:0, exp:"Dividir por 1 no cambia el número."},
-    {q:"(2 + 4j) / (1 + j) = ?", opts:["3 + j","3 − j","1 + 3j","−1 + 3j"], ans:0, exp:"Multiplicar por (1−j)/(1−j): (2+4j)(1−j)/2=(2−2j+4j−4j²)/2=(6+2j)/2=3+j."},
-    {q:"(5 + 5j) / (1 + j) = ?", opts:["5","5j","10","0"], ans:0, exp:"(5+5j)(1−j)/2=(5−5j+5j−5j²)/2=(5+5)/2=10/2=5."},
-    {q:"(3 + j) / (1 − j) = ?", opts:["1 + 2j","2 + j","1 − 2j","2 − j"], ans:0, exp:"(3+j)(1+j)/2=(3+3j+j+j²)/2=(2+4j)/2=1+2j."},
-    {q:"(1 + j) / j = ?", opts:["1 − j","1 + j","j − 1","−j + 1"], ans:0, exp:"Multiplicar por −j/−j: (1+j)(−j)/(−j²)=(−j−j²)/1=−j+1=1−j."},
-    {q:"j / (1 + j) = ?", opts:["(1+j)/2","(1−j)/2","j/2","(j−1)/2"], ans:0, exp:"j(1−j)/((1+j)(1−j))=(j−j²)/2=(j+1)/2=(1+j)/2."},
-    // Módulo
-    {q:"¿Cuál es el módulo de z = 3 + 4j?", opts:["5","7","√7","25"], ans:0, exp:"|z| = √(3²+4²) = √(9+16) = √25 = 5."},
-    {q:"¿Cuál es el módulo de z = 1 + j?", opts:["2","√2","1","√3"], ans:1, exp:"|z| = √(1+1) = √2 ≈ 1,414."},
-    {q:"¿Cuál es el módulo de z = 5 + 0j?", opts:["0","5","25","√5"], ans:1, exp:"|z| = √(25+0) = 5."},
-    {q:"¿Cuál es el módulo de z = 0 + 4j?", opts:["0","4","16","√4"], ans:1, exp:"|z| = √(0+16) = 4."},
-    {q:"¿Cuál es el módulo de z = −3 + 4j?", opts:["1","7","5","√7"], ans:2, exp:"|z| = √(9+16) = 5."},
-    {q:"¿Cuál es el módulo de z = 6 − 8j?", opts:["2","10","14","√28"], ans:1, exp:"|z| = √(36+64) = √100 = 10."},
-    {q:"¿Cuál es el módulo de z = 1 + √3·j?", opts:["2","√2","√3","4"], ans:0, exp:"|z| = √(1+3) = √4 = 2."},
-    {q:"¿Cuál es el módulo de z = −5 − 12j?", opts:["7","13","17","√119"], ans:1, exp:"|z| = √(25+144) = √169 = 13."},
-    // Argumento y cuadrante
-    {q:"z = 1 + j está en el cuadrante:", opts:["I","II","III","IV"], ans:0, exp:"a>0, b>0 → Cuadrante I."},
-    {q:"z = −1 + j está en el cuadrante:", opts:["I","II","III","IV"], ans:1, exp:"a<0, b>0 → Cuadrante II."},
-    {q:"z = −1 − j está en el cuadrante:", opts:["I","II","III","IV"], ans:2, exp:"a<0, b<0 → Cuadrante III."},
-    {q:"z = 1 − j está en el cuadrante:", opts:["I","II","III","IV"], ans:3, exp:"a>0, b<0 → Cuadrante IV."},
-    {q:"¿Cuál es el argumento de z = 1 + j?", opts:["30°","45°","60°","90°"], ans:1, exp:"θ = arctan(1/1) = arctan(1) = 45°."},
-    {q:"¿Cuál es el argumento de z = √3 + j?", opts:["30°","45°","60°","90°"], ans:0, exp:"θ = arctan(1/√3) = 30°."},
-    {q:"¿Cuál es el argumento de z = 1 + √3·j?", opts:["30°","45°","60°","90°"], ans:2, exp:"θ = arctan(√3/1) = 60°."},
-    {q:"¿Cuál es el argumento de z = 0 + 5j?", opts:["0°","45°","90°","180°"], ans:2, exp:"Eje imaginario positivo → θ = 90°."},
-    {q:"¿Cuál es el argumento de z = −4 + 0j?", opts:["0°","90°","180°","270°"], ans:2, exp:"Eje real negativo → θ = 180°."},
-    // Rectangular → Polar
-    {q:"z = 3 + 4j en forma polar es:", opts:["5∠53,13°","5∠36,87°","4∠53,13°","3∠53,13°"], ans:0, exp:"r=5, θ=arctan(4/3)≈53,13°."},
-    {q:"z = 1 + j en forma polar es:", opts:["√2∠45°","2∠45°","√2∠90°","1∠45°"], ans:0, exp:"r=√2, θ=45°."},
-    {q:"z = 0 + 3j en forma polar es:", opts:["3∠0°","3∠90°","3∠180°","3∠270°"], ans:1, exp:"r=3, θ=90° (eje imaginario positivo)."},
-    {q:"z = −5 + 0j en forma polar es:", opts:["5∠0°","5∠90°","5∠180°","5∠270°"], ans:2, exp:"r=5, θ=180° (eje real negativo)."},
-    {q:"z = 4 − 3j en forma polar es:", opts:["5∠−36,87°","5∠36,87°","5∠53,13°","7∠−36,87°"], ans:0, exp:"r=5, θ=arctan(−3/4)≈−36,87° (Q IV)."},
-    {q:"z = −1 − j en forma polar es:", opts:["√2∠45°","√2∠135°","√2∠225°","√2∠315°"], ans:2, exp:"r=√2, θ=180°+45°=225° (Q III)."},
-    {q:"z = 6 + 8j en forma polar es:", opts:["10∠53,13°","10∠36,87°","14∠53,13°","8∠53,13°"], ans:0, exp:"r=√(36+64)=10, θ=arctan(8/6)≈53,13°."},
-    {q:"z = √3 − j en forma polar es:", opts:["2∠30°","2∠−30°","2∠150°","2∠330°"], ans:1, exp:"r=√(3+1)=2, θ=arctan(−1/√3)=−30° (Q IV)."},
-    // Polar → Rectangular
-    {q:"z = 2∠0° en forma rectangular es:", opts:["2 + 0j","0 + 2j","2 + 2j","1 + j"], ans:0, exp:"a=2·cos0°=2, b=2·sin0°=0 → 2+0j."},
-    {q:"z = 4∠90° en forma rectangular es:", opts:["4 + 0j","0 + 4j","4 + 4j","2 + 2j"], ans:1, exp:"a=4·cos90°=0, b=4·sin90°=4 → 0+4j."},
-    {q:"z = 10∠30° en forma rectangular es:", opts:["5√3 + 5j","5 + 5√3·j","10 + 30j","√3 + j"], ans:0, exp:"a=10·cos30°=5√3≈8,66, b=10·sin30°=5."},
-    {q:"z = 10∠60° en forma rectangular es:", opts:["5 + 5√3·j","5√3 + 5j","10 + 60j","√3 + j"], ans:0, exp:"a=10·cos60°=5, b=10·sin60°=5√3≈8,66."},
-    {q:"z = 5∠180° en forma rectangular es:", opts:["5 + 0j","0 + 5j","−5 + 0j","0 − 5j"], ans:2, exp:"a=5·cos180°=−5, b=5·sin180°=0."},
-    {q:"z = 6∠270° en forma rectangular es:", opts:["0 + 6j","0 − 6j","6 + 0j","−6 + 0j"], ans:1, exp:"a=6·cos270°=0, b=6·sin270°=−6."},
-    {q:"z = 2∠45° en forma rectangular es:", opts:["√2 + √2·j","2 + 2j","1 + j","√2 + j"], ans:0, exp:"a=2·cos45°=√2, b=2·sin45°=√2."},
-    {q:"z = 4∠120° en forma rectangular es:", opts:["−2 + 2√3·j","2 + 2√3·j","−2√3 + 2j","2√3 + 2j"], ans:0, exp:"a=4·cos120°=−2, b=4·sin120°=2√3."},
-    // Producto y división en polar
-    {q:"2∠30° · 3∠60° = ?", opts:["6∠90°","5∠90°","6∠30°","6∠1800°"], ans:0, exp:"r=2·3=6, θ=30°+60°=90°."},
-    {q:"5∠45° · 2∠45° = ?", opts:["10∠90°","7∠90°","10∠45°","10∠2025°"], ans:0, exp:"r=10, θ=45°+45°=90°."},
-    {q:"10∠60° / 2∠30° = ?", opts:["5∠30°","8∠30°","5∠90°","20∠30°"], ans:0, exp:"r=10/2=5, θ=60°−30°=30°."},
-    {q:"8∠120° / 4∠60° = ?", opts:["2∠60°","2∠180°","4∠60°","32∠60°"], ans:0, exp:"r=8/4=2, θ=120°−60°=60°."},
-    {q:"3∠0° · 4∠90° = ?", opts:["12∠90°","12∠0°","7∠90°","12∠270°"], ans:0, exp:"r=12, θ=0°+90°=90°."},
-    {q:"6∠150° / 3∠30° = ?", opts:["2∠120°","2∠180°","9∠120°","18∠120°"], ans:0, exp:"r=6/3=2, θ=150°−30°=120°."},
-    {q:"(2∠45°)² = ?", opts:["4∠90°","4∠45°","2∠90°","4∠2025°"], ans:0, exp:"r²=4, θ·2=90°."},
-    {q:"√(4∠60°) = ?", opts:["2∠30°","2∠60°","4∠30°","√2∠30°"], ans:0, exp:"r=√4=2, θ=60°/2=30°."},
-    // Aplicaciones electrónica
-    {q:"En un circuito, V = 10∠0° V y Z = 2∠30° Ω. La corriente I = V/Z es:", opts:["5∠−30° A","5∠30° A","20∠30° A","8∠30° A"], ans:0, exp:"I=V/Z=10/2∠(0°−30°)=5∠−30° A."},
-    {q:"La impedancia Z = R + jX. Si R=3Ω y X=4Ω, el módulo |Z| es:", opts:["7 Ω","5 Ω","1 Ω","12 Ω"], ans:1, exp:"|Z|=√(9+16)=5 Ω."},
-    {q:"Si Z = 5∠53,13° Ω, la resistencia R (parte real) es:", opts:["4 Ω","3 Ω","5 Ω","2 Ω"], ans:1, exp:"R=5·cos53,13°≈3 Ω."},
-    {q:"Si Z = 5∠53,13° Ω, la reactancia X (parte imaginaria) es:", opts:["4 Ω","3 Ω","5 Ω","2 Ω"], ans:0, exp:"X=5·sin53,13°≈4 Ω."},
-    {q:"Dos impedancias en serie: Z₁=3+4j Ω y Z₂=1−2j Ω. La impedancia total es:", opts:["4 + 2j Ω","2 + 6j Ω","4 − 2j Ω","3 + 2j Ω"], ans:0, exp:"Z=Z₁+Z₂=(3+1)+(4−2)j=4+2j Ω."},
-    // Plano de Argand y Euler
-    {q:"En el plano de Argand, el eje horizontal representa:", opts:["La parte imaginaria","La parte real","El módulo","El argumento"], ans:1, exp:"El eje real (horizontal) representa la parte real del número complejo."},
-    {q:"En el plano de Argand, el eje vertical representa:", opts:["La parte imaginaria","La parte real","El módulo","El argumento"], ans:0, exp:"El eje imaginario (vertical) representa la parte imaginaria."},
-    {q:"La fórmula de Euler establece que e^(jθ) = ?", opts:["cosθ + j·sinθ","cosθ − j·sinθ","sinθ + j·cosθ","j·cosθ"], ans:0, exp:"e^(jθ) = cosθ + j·sinθ (fórmula de Euler)."},
-    {q:"Según Euler, e^(j·90°) = e^(jπ/2) = ?", opts:["1","−1","j","−j"], ans:2, exp:"cos90°+j·sin90°=0+j=j."},
-    {q:"Según Euler, e^(jπ) = ?", opts:["1","−1","j","0"], ans:1, exp:"cos180°+j·sin180°=−1+0=−1 (identidad de Euler)."},
-    {q:"¿Qué representa el módulo de un fasor en electrónica?", opts:["La frecuencia","La fase","La amplitud","La potencia"], ans:2, exp:"El módulo del fasor representa la amplitud (valor pico o RMS) de la señal."},
-    {q:"¿Qué representa el argumento de un fasor en electrónica?", opts:["La frecuencia","La fase","La amplitud","La potencia"], ans:1, exp:"El argumento del fasor representa el ángulo de fase de la señal."},
-    {q:"Si un fasor de tensión es V=220∠0° y uno de corriente es I=10∠−30°, el circuito es:", opts:["Resistivo","Inductivo","Capacitivo","Resonante"], ans:1, exp:"La corriente atrasa a la tensión (−30°) → circuito inductivo."},
-    // Combinados
-    {q:"(2 + j) + (3 − 2j) − (1 + j) = ?", opts:["4 − 2j","4 + 2j","6 − 2j","0"], ans:0, exp:"(2+3−1)+(1−2−1)j=4−2j."},
-    {q:"|(3 + 4j)| · |(1 + j)| = ?", opts:["5√2","5","√2","7"], ans:0, exp:"|3+4j|=5, |1+j|=√2 → 5√2."},
-    {q:"Si z = 2∠30°, ¿cuánto es z · z̄?", opts:["4","2","4∠60°","0"], ans:0, exp:"z·z̄ = |z|² = 4 (número real)."},
-    {q:"(1 + j)⁴ = ?", opts:["4","−4","4j","−4j"], ans:1, exp:"(1+j)²=2j; (2j)²=4j²=−4."},
-    {q:"¿Cuánto es j + j² + j³ + j⁴?", opts:["0","1","j","4"], ans:0, exp:"j+(−1)+(−j)+1=0."},
-    {q:"Si z₁=2∠45° y z₂=3∠−45°, ¿cuánto es z₁·z₂?", opts:["6∠0°","6∠90°","5∠0°","6∠−90°"], ans:0, exp:"r=6, θ=45°−45°=0° → 6∠0°=6 (número real)."},
-    {q:"La parte real de (1+j)/(1−j) es:", opts:["0","1","−1","2"], ans:0, exp:"(1+j)²/((1−j)(1+j))=(1+2j−1)/2=2j/2=j → parte real = 0."},
-    {q:"¿Cuál es el módulo de j¹⁰⁰?", opts:["0","1","100","−1"], ans:1, exp:"j¹⁰⁰=(j⁴)²⁵=1²⁵=1, |1|=1."},
-    {q:"Si Z=R+jωL, al aumentar la frecuencia ω, la impedancia:", opts:["Disminuye","No cambia","Aumenta su parte imaginaria","Aumenta su parte real"], ans:2, exp:"La reactancia inductiva XL=ωL aumenta con la frecuencia."},
-    {q:"La reactancia capacitiva es XC = 1/(ωC). En forma compleja, la impedancia capacitiva es:", opts:["jωC","−j/(ωC)","j/(ωC)","ωC"], ans:1, exp:"ZC = 1/(jωC) = −j/(ωC) (multiplicando por −j/−j)."}
-  ],
+let totalScore = 0;
+let currentTopic = "";
+let currentIdx = 0;
+
+const quizzes = {
+    irr: [
+        { q:"√2 + √2 =", o:["√4","2","2√2"], a:2, e:"Sumamos los coeficientes." },
+        { q:"√8 simplificado es:", o:["4","2√2","2√4"], a:1, e:"√(4·2) = 2√2" },
+        { q:"√3 · √3 =", o:["3","√6","9"], a:0, e:"√9 = 3" },
+        { q:"Racionalizar 1/√3:", o:["√3","√3/3","3"], a:1, e:"Multiplicamos por √3/√3" }
+    ],
+    com: [
+        { q:"i² es igual a:", o:["1","-1","i"], a:1, e:"Definición de unidad imaginaria." },
+        { q:"¿Parte imaginaria de 3 + 2i?", o:["3","2i","2"], a:2, e:"Solo el número b." },
+        { q:"Módulo de 3+4i:", o:["5","7","25"], a:0, e:"√(3²+4²) = 5" }
+    ],
+    pol: [{q:"P(x)=x+2, P(1)=?", o:["1","2","3"], a:2, e:"1+2=3"}],
+    ruf: [{q:"Divisor x-2, a=?", o:["2","-2","0"], a:0, e:"Opuesto"}],
+    res: [{q:"Resto de x-1 en x²", o:["0","1","-1"], a:1, e:"1²=1"}],
+    sis: [{q:"x+y=2, x-y=0", o:["x=1,y=1","x=2,y=0","x=0,y=2"], a:0, e:"1+1=2, 1-1=0"}],
+    fun: [{q:"f(x)=2x, f(3)=?", o:["5","6","2"], a:1, e:"2*3=6"}],
+    fac: [{q:"x²-1 =", o:["(x-1)²","(x+1)(x-1)","x(x-1)"], a:1, e:"Diferencia cuadrados"}]
 };
-var qState = {};
-function initQuiz(topic) {
-  if (qState[topic]) return;
-  qState[topic] = {current:0,answered:0,correct:0,done:[]};
-  renderQuiz(topic);
-}
-function renderQuiz(topic) {
-  var qs = quizzes[topic];
-  var st = qState[topic];
-  var container = document.getElementById('quiz-' + topic);
-  if (!container) return;
-  container.innerHTML = '';
-  var scoreDiv = document.createElement('div');
-  scoreDiv.className = 'score-bar';
-  scoreDiv.style.marginBottom = '1.2rem';
-  scoreDiv.innerHTML = '<span>Correctas:</span><span class="score-val" id="qscore-'+topic+'">'+st.correct+'</span><span>/ '+qs.length+'</span><div style="flex:1"></div><div style="width:120px"><div class="progress-wrap"><div class="progress-bar" id="qprog-'+topic+'" style="width:'+( st.correct/qs.length*100)+'%"></div></div></div>';
-  container.appendChild(scoreDiv);
-  qs.forEach(function(q,i) {
-    var card = document.createElement('div');
-    card.className = 'quiz-card';
-    card.id = 'qcard-'+topic+'-'+i;
-    var title = document.createElement('h3');
-    title.textContent = (i+1)+'. '+q.q;
-    card.appendChild(title);
-    var optsDiv = document.createElement('div');
-    optsDiv.className = 'quiz-options';
-    q.opts.forEach(function(opt,j) {
-      var btn = document.createElement('button');
-      btn.className = 'qopt';
-      btn.textContent = opt;
-      btn.id = 'opt-'+topic+'-'+i+'-'+j;
-      btn.onclick = (function(qi,oi){return function(){checkAnswer(topic,qi,oi);};})(i,j);
-      optsDiv.appendChild(btn);
-    });
-    card.appendChild(optsDiv);
-    var fb = document.createElement('div');
-    fb.className = 'quiz-feedback';
-    fb.id = 'fb-'+topic+'-'+i;
-    card.appendChild(fb);
-    var exp = document.createElement('p');
-    exp.style.cssText = 'font-size:13px;color:var(--muted);margin-top:8px;display:none;line-height:1.7';
-    exp.id = 'exp-'+topic+'-'+i;
-    exp.textContent = q.exp;
-    card.appendChild(exp);
-    if (st.done[i] !== undefined) restoreAnswer(topic,i,st.done[i],q);
-    container.appendChild(card);
-  });
-}
-function checkAnswer(topic,qi,oi) {
-  var q = quizzes[topic][qi];
-  var st = qState[topic];
-  if (st.done[qi] !== undefined) return;
-  st.done[qi] = oi;
-  var correct = (oi === q.ans);
-  if (correct){st.correct++;score++;}
-  totalAnswered++;
-  updateGlobalScore();
-  var fb = document.getElementById('fb-'+topic+'-'+qi);
-  var exp = document.getElementById('exp-'+topic+'-'+qi);
-  q.opts.forEach(function(_,j){
-    var btn = document.getElementById('opt-'+topic+'-'+qi+'-'+j);
-    btn.disabled = true;
-    if (j===q.ans) btn.classList.add('correct');
-    else if (j===oi) btn.classList.add('wrong');
-  });
-  fb.innerHTML = correct ? '<span class="fb-ok">✓ ¡Correcto!</span>' : '<span class="fb-no">✗ Incorrecto.</span>';
-  if (exp) exp.style.display = 'block';
-  var scoreEl = document.getElementById('qscore-'+topic);
-  var progEl = document.getElementById('qprog-'+topic);
-  if (scoreEl) scoreEl.textContent = st.correct;
-  if (progEl) progEl.style.width = (st.correct/quizzes[topic].length*100)+'%';
-}
-function restoreAnswer(topic,qi,oi,q) {
-  setTimeout(function(){
-    q.opts.forEach(function(_,j){
-      var btn = document.getElementById('opt-'+topic+'-'+qi+'-'+j);
-      if (!btn) return;
-      btn.disabled = true;
-      if (j===q.ans) btn.classList.add('correct');
-      else if (j===oi && oi!==q.ans) btn.classList.add('wrong');
-    });
-    var exp = document.getElementById('exp-'+topic+'-'+qi);
-    if (exp) exp.style.display = 'block';
-  },50);
-}
-function updateGlobalScore() {
-  var sb = document.getElementById('score-bar');
-  if (sb) sb.style.display = 'flex';
-  var sv = document.getElementById('score-val');
-  if (sv) sv.textContent = score;
-  var total = 0;
-  Object.keys(qState).forEach(function(t){total += quizzes[t].length;});
-  var pb = document.getElementById('prog-bar');
-  var pt = document.getElementById('prog-text');
-  if (pb) pb.style.width = (score/Math.max(total,1)*100)+'%';
-  if (pt) pt.textContent = score+' / '+total;
-}
+
 function startApp() {
-  var n = document.getElementById('name-input').value.trim();
-  if (!n){document.getElementById('name-input').focus();return;}
-  studentName = n;
-  document.getElementById('welcome-screen').style.display = 'none';
-  document.getElementById('greeting').style.display = 'block';
-  document.getElementById('student-name').textContent = n;
-  document.getElementById('app').style.display = 'block';
+    const name = document.getElementById('user-name').value;
+    if(!name) return alert("Ingresá tu nombre");
+    document.getElementById('login-view').style.display='none';
+    document.getElementById('app').style.display='block';
+    document.getElementById('welcome-msg').innerText = "Hola " + name + " 👋";
 }
-function showTopic(topic, e) {
-  var ev = e || event;
-  document.querySelectorAll('.content-panel').forEach(function(p){p.classList.remove('active');});
-  document.querySelectorAll('.topic-btn').forEach(function(b){b.classList.remove('active');});
-  var panel = document.getElementById('panel-' + topic);
-  if (panel) panel.classList.add('active');
-  if (ev && ev.currentTarget) ev.currentTarget.classList.add('active');
-  if (panel) panel.scrollIntoView({behavior:'smooth',block:'start'});
+
+function showTopic(topic) {
+    document.querySelector('.topics-grid').style.display='none';
+    document.querySelectorAll('.content-panel').forEach(p=>p.style.display='none');
+    document.getElementById('panel-'+topic).style.display='block';
+    showSub(topic, 'theory');
 }
-function showSub(prefix, sub, e) {
-  var ev = e || event;
-  var activePanel = document.querySelector('.content-panel.active');
-  if (!activePanel) return;
-  activePanel.querySelectorAll('[id^="'+prefix+'-"]').forEach(function(d){d.style.display='none';});
-  var target = document.getElementById(prefix+'-'+sub);
-  if (target) target.style.display = 'block';
-  activePanel.querySelectorAll('.stab').forEach(function(b){b.classList.remove('active');});
-  if (ev && ev.target) ev.target.classList.add('active');
-  if (sub === 'ejercicios') {
-    var topicMap = {pol:'pol',ruf:'ruf',res:'res',sis:'sis',fun:'fun',fac:'fac',irr:'irr',com:'com'};
-    initQuiz(topicMap[prefix]);
-  }
+
+function showSub(topic, sub) {
+    currentTopic = topic;
+    const p = document.getElementById('panel-'+topic);
+    p.querySelector('.theory-section').classList.toggle('active', sub==='theory');
+    p.querySelector('.quiz-container').classList.toggle('active', sub==='quiz');
+    p.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.innerText.includes(sub==='theory'?'Teoría':'Ejercicios')));
+    if(sub==='quiz') initQuiz();
 }
+
+function home() {
+    document.querySelector('.topics-grid').style.display='grid';
+    document.querySelectorAll('.content-panel').forEach(p=>p.style.display='none');
+}
+
+function initQuiz() {
+    currentIdx = 0;
+    renderQ();
+}
+
+function renderQ() {
+    const q = quizzes[currentTopic][currentIdx];
+    const fb = document.getElementById(currentTopic+'-feedback');
+    fb.style.display='none';
+    document.getElementById(currentTopic+'-question').innerText = q.q;
+    const opts = document.getElementById(currentTopic+'-options');
+    opts.innerHTML = "";
+    q.o.forEach((o, i) => {
+        const b = document.createElement('button');
+        b.className = 'option-btn';
+        b.innerText = o;
+        b.onclick = () => check(i);
+        opts.appendChild(b);
+    });
+}
+
+function check(i) {
+    const q = quizzes[currentTopic][currentIdx];
+    const fb = document.getElementById(currentTopic+'-feedback');
+    fb.style.display='block';
+    if(i === q.a) {
+        fb.innerText = "¡Bien! " + q.e;
+        fb.style.background = "var(--success)";
+        totalScore += 10;
+        document.getElementById(currentTopic+'-score').innerText = parseInt(document.getElementById(currentTopic+'-score').innerText)+1;
+    } else {
+        fb.innerText = "Error. " + q.e;
+        fb.style.background = "var(--error)";
+    }
+    document.getElementById('total-score').innerText = totalScore;
+    setTimeout(() => {
+        currentIdx++;
+        if(currentIdx < quizzes[currentTopic].length) renderQ();
+        else fb.innerText = "¡Terminaste este tema!";
+    }, 2000);
+}
+
 function toggleSol(btn) {
-  var sol = btn.nextElementSibling;
-  if (sol.classList.contains('open')){
-    sol.classList.remove('open');sol.style.display='none';
-    btn.textContent = btn.textContent.replace('Ocultar','Ver');
-  } else {
-    sol.classList.add('open');sol.style.display='block';
-    btn.textContent = btn.textContent.replace('Ver','Ocultar');
-  }
+    const s = btn.nextElementSibling;
+    s.style.display = s.style.display==='block'?'none':'block';
+    btn.innerText = s.style.display==='block'?'Ocultar':'Ver solución';
 }
 </script>
 </body>
