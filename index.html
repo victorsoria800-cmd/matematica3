@@ -18,724 +18,433 @@
             --error: #ef4444;
             --border: #334155;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
-
         .container { max-width: 1000px; margin: 0 auto; padding: 2rem; }
         header { text-align: center; margin-bottom: 3rem; animation: fadeInDown 0.8s ease-out; }
-        .badge { background: rgba(99, 102, 241, 0.1); color: var(--primary); padding: 0.5rem 1rem; border-radius: 99px; font-weight: 600; font-size: 0.875rem; display: inline-block; margin-bottom: 1rem; border: 1px solid rgba(99, 102, 241, 0.2); }
+        .badge { background: rgba(99,102,241,0.1); color: var(--primary); padding: 0.5rem 1rem; border-radius: 99px; font-weight: 600; font-size: 0.875rem; display: inline-block; margin-bottom: 1rem; border: 1px solid rgba(99,102,241,0.2); }
         h1 { font-size: 3rem; font-weight: 800; letter-spacing: -0.025em; margin-bottom: 0.5rem; background: linear-gradient(to right, #818cf8, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .subtitle { color: var(--text-dim); font-size: 1.125rem; }
-
-        #login-view { text-align: center; padding: 4rem 2rem; background: var(--card-bg); border-radius: 24px; border: 1px solid var(--border); max-width: 500px; margin: 0 auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
-        .input-group { margin: 2rem 0; position: relative; }
+        #login-view { text-align: center; padding: 4rem 2rem; background: var(--card-bg); border-radius: 24px; border: 1px solid var(--border); max-width: 500px; margin: 0 auto; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
+        .input-group { margin: 2rem 0; }
         input { width: 100%; padding: 1rem 1.5rem; background: var(--bg); border: 2px solid var(--border); border-radius: 12px; color: white; font-size: 1rem; transition: all 0.3s; }
-        input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2); }
+        input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(99,102,241,0.2); }
         .btn-main { background: var(--primary); color: white; border: none; padding: 1rem 2.5rem; border-radius: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; width: 100%; font-size: 1rem; }
-        .btn-main:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.4); }
-
+        .btn-main:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(99,102,241,0.4); }
         #app { display: none; }
         #greeting { margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between; }
-        
         .topics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
-        .topic-card { background: var(--card-bg); padding: 2rem; border-radius: 20px; border: 1px solid var(--border); cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
-        .topic-card:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3); }
-        .topic-icon { font-size: 2.5rem; margin-bottom: 1rem; display: block; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)); }
+        .topic-card { background: var(--card-bg); padding: 2rem; border-radius: 20px; border: 1px solid var(--border); cursor: pointer; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
+        .topic-card:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); }
+        .topic-icon { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
         .topic-card h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
         .topic-card p { color: var(--text-dim); font-size: 0.875rem; }
-
-        .content-panel { display: none; background: var(--card-bg); border-radius: 24px; border: 1px solid var(--border); padding: 2rem; animation: slideUp 0.5s ease-out; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2); }
+        .content-panel { display: none; background: var(--card-bg); border-radius: 24px; border: 1px solid var(--border); padding: 2rem; animation: slideUp 0.5s ease-out; }
         .tabs { display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
         .tab-btn { background: none; border: none; color: var(--text-dim); padding: 0.5rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
-        .tab-btn.active { background: rgba(99, 102, 241, 0.1); color: var(--primary); border: 1px solid var(--primary); }
-
+        .tab-btn.active { background: rgba(99,102,241,0.1); color: var(--primary); border: 1px solid var(--primary); }
         .theory-section { display: none; }
         .theory-section.active { display: block; animation: fadeIn 0.3s ease-in; }
         .theory-item { background: var(--bg); padding: 1.5rem; border-radius: 16px; margin-bottom: 1.5rem; border-left: 4px solid var(--primary); }
-        .theory-item h4 { color: var(--primary); margin-bottom: 0.5rem; }
-
+        .theory-item h4 { color: var(--primary); margin-bottom: 0.5rem; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
         .quiz-container { display: none; max-width: 600px; margin: 0 auto; }
         .quiz-container.active { display: block; }
         .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
-        .question-box { background: var(--bg); padding: 2rem; border-radius: 20px; margin-bottom: 1.5rem; border: 1px solid var(--border); font-size: 1.25rem; text-align: center; min-height: 150px; display: flex; align-items: center; justify-content: center; }
+        .question-box { background: var(--bg); padding: 2rem; border-radius: 20px; margin-bottom: 1.5rem; border: 1px solid var(--border); font-size: 1.25rem; text-align: center; min-height: 120px; display: flex; align-items: center; justify-content: center; }
         .options-grid { display: grid; gap: 1rem; }
         .option-btn { background: var(--card-bg); border: 2px solid var(--border); color: var(--text-main); padding: 1rem 1.5rem; border-radius: 12px; cursor: pointer; text-align: left; transition: all 0.2s; font-size: 1rem; }
-        .option-btn:hover { border-color: var(--primary); background: rgba(99, 102, 241, 0.05); }
+        .option-btn:hover { border-color: var(--primary); background: rgba(99,102,241,0.05); }
         .option-btn.correct { background: var(--success); border-color: var(--success); color: white; }
         .option-btn.wrong { background: var(--error); border-color: var(--error); color: white; }
-
         .feedback { margin-top: 1.5rem; padding: 1rem; border-radius: 12px; display: none; text-align: center; font-weight: 600; }
-        
-        .score-display { font-weight: bold; color: var(--primary); background: rgba(99, 102, 241, 0.1); padding: 0.5rem 1rem; border-radius: 12px; }
-
-        footer { margin-top: 5rem; text-align: center; color: var(--text-dim); font-size: 0.875rem; border-top: 1px solid var(--border); padding-top: 2rem; }
-
-        table { width: 100%; border-collapse: collapse; margin: 1rem 0; background: var(--bg); border-radius: 8px; overflow: hidden; }
-        th, td { padding: 12px; text-align: left; border: 1px solid var(--border); }
-        th { background: var(--primary); color: white; }
-
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
+        .score-display { font-weight: bold; color: var(--primary); background: rgba(99,102,241,0.1); padding: 0.5rem 1rem; border-radius: 12px; }
         .solution-toggle { margin-top: 10px; color: var(--primary); background: none; border: 1px solid var(--primary); padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8em; }
-        .solution-content { display: none; margin-top: 10px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px; font-family: monospace; color: #a5f3fc; }
-
-        .matrix-table { border: none; font-family: 'Courier New', Courier, monospace; letter-spacing: 2px; }
-        .matrix-table td { border: none; padding: 8px 15px; }
-        .matrix-br { border-left: 2px solid white !important; border-radius: 10px 0 0 10px; }
-        .matrix-bl { border-right: 2px solid white !important; border-radius: 0 10px 10px 0; }
+        .solution-content { display: none; margin-top: 10px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px; color: #a5f3fc; }
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; background: var(--bg); border-radius: 8px; overflow: hidden; }
+        th, td { padding: 10px 14px; text-align: left; border: 1px solid var(--border); }
+        th { background: var(--primary); color: white; }
+        footer { margin-top: 5rem; text-align: center; color: var(--text-dim); font-size: 0.875rem; border-top: 1px solid var(--border); padding-top: 2rem; }
+        @keyframes fadeInDown { from { opacity:0; transform:translateY(-20px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes slideUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
     </style>
 </head>
 <body>
+<div class="container">
+    <header>
+        <div class="badge">EET N° 3117 "Daniel Oscar Reyes"</div>
+        <h1>Matemática III</h1>
+        <p class="subtitle">1° Año CST / CS · Período 2026</p>
+    </header>
 
-    <div class="container" id="main-container">
-        <header>
-            <div class="badge">EET N° 3117 "Daniel Oscar Reyes"</div>
-            <h1>Matemática III</h1>
-            <p class="subtitle">1° Año CST / CS &middot; Período 2026</p>
-        </header>
-
-        <div id="login-view">
-            <div style="font-size: 4rem; margin-bottom: 1rem;">🚀</div>
-            <h2>Plataforma interactiva de práctica</h2>
-            <p style="color: var(--text-dim); margin-top: 0.5rem;">Ingresá tu nombre para comenzar a practicar</p>
-            <div class="input-group">
-                <input type="text" id="user-name" placeholder="Tu nombre aquí..." onkeypress="if(event.key==='Enter') startApp()">
-            </div>
-            <button class="btn-main" onclick="startApp()">Comenzar →</button>
+    <div id="login-view">
+        <div style="font-size:4rem;margin-bottom:1rem">🚀</div>
+        <h2>Plataforma interactiva de práctica</h2>
+        <p style="color:var(--text-dim);margin-top:0.5rem">Ingresá tu nombre para comenzar a practicar</p>
+        <div class="input-group">
+            <input type="text" id="user-name" placeholder="Tu nombre aquí..." onkeypress="if(event.key==='Enter')startApp()">
         </div>
-
-        <div id="app">
-            <div id="greeting">
-                <h2 id="welcome-msg">Hola, 👋</h2>
-                <div class="score-display">Puntaje total: <span id="total-score">0</span></div>
-            </div>
-            
-            <p style="margin-bottom: 2rem; color: var(--text-dim)">Elegí un tema para practicar</p>
-
-            <div class="topics-grid">
-                <div class="topic-card" onclick="showTopic('pol')">
-                    <span class="topic-icon">📐</span>
-                    <h3>Polinomios</h3>
-                    <p>Operaciones y propiedades</p>
-                </div>
-                <div class="topic-card" onclick="showTopic('ruf')">
-                    <span class="topic-icon">➗</span>
-                    <h3>Regla de Ruffini</h3>
-                    <p>División de polinomios</p>
-                </div>
-                <div class="topic-card" onclick="showTopic('res')">
-                    <span class="topic-icon">🧮</span>
-                    <h3>Teorema del Resto</h3>
-                    <p>Resto sin dividir</p>
-                </div>
-                <div class="topic-card" onclick="showTopic('sis')">
-                    <span class="topic-icon">⚖️</span>
-                    <h3>Sistemas de Ecuaciones</h3>
-                    <p>Sustitución, Gauss y más</p>
-                </div>
-                <div class="topic-card" onclick="showTopic('fun')">
-                    <span class="topic-icon">📈</span>
-                    <h3>Funciones</h3>
-                    <p>Dominio, imagen, gráficas</p>
-                </div>
-                <div class="topic-card" onclick="showTopic('fac')">
-                    <span class="topic-icon">🔢</span>
-                    <h3>Factorización</h3>
-                    <p>Factor común y casos</p>
-                </div>
-                <div class="topic-card" onclick="showTopic('irr')">
-                    <span class="topic-icon">🟰</span>
-                    <h3>Números Irracionales</h3>
-                    <p>Operaciones y propiedades</p>
-                </div>
-                <div class="topic-card" onclick="showTopic('com')">
-                    <span class="topic-icon">🔷</span>
-                    <h3>Números Complejos</h3>
-                    <p>Operaciones y gráfica</p>
-                </div>
-            </div>
-
-            <!-- Panel Polinomios -->
-            <div id="panel-pol" class="content-panel">
-                <div class="tabs">
-                    <button class="tab-btn active" onclick="showSub('pol', 'theory')">Teoría</button>
-                    <button class="tab-btn" onclick="showSub('pol', 'quiz')">Ejercicios</button>
-                    <button class="tab-btn" style="margin-left:auto" onclick="home()">← Volver</button>
-                </div>
-                <div id="pol-theory" class="theory-section active">
-                    <div class="theory-item">
-                        <h4>Concepto</h4>
-                        <h3>¿Qué es un polinomio?</h3>
-                        <p>Un polinomio es una expresión algebraica de la forma:<br><br><strong>P(x) = aₙxⁿ + aₙ₋₁xⁿ⁻¹ + … + a₁x + a₀</strong><br><br>donde aₙ ≠ 0 es el coeficiente líder y n es el grado del polinomio.</p>
-                    </div>
-                    <div class="theory-item">
-                        <h4>Ejemplo resuelto</h4>
-                        <h3>Suma: P(x) = 3x² + 2x − 1 y Q(x) = x² − 5x + 4</h3>
-                        <button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button>
-                        <div class="solution-content">
-                            <strong>Paso 1.</strong> Agrupamos términos semejantes:<br>
-                            (3+1)x² + (2−5)x + (−1+4)<br><br>
-                            <strong>Paso 2.</strong><br>
-                            <strong>Resultado:</strong> 4x² − 3x + 3
-                        </div>
-                    </div>
-                    <div class="theory-item">
-                        <h4>Ejemplo resuelto</h4>
-                        <h3>Multiplicación: (x + 2)(x − 3)</h3>
-                        <button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button>
-                        <div class="solution-content">
-                            <strong>Distributiva:</strong> x·x + x·(−3) + 2·x + 2·(−3)<br>
-                            = x² − 3x + 2x − 6<br><br>
-                            <strong>Resultado:</strong> x² − x − 6
-                        </div>
-                    </div>
-                </div>
-                <div id="pol-quiz" class="quiz-container">
-                    <div class="quiz-header">
-                        <span id="pol-progress">0 / 0</span>
-                        <span class="score-display">Correctas: <span id="pol-score">0</span></span>
-                    </div>
-                    <div class="question-box" id="pol-question">Pregunta aquí...</div>
-                    <div class="options-grid" id="pol-options"></div>
-                    <div id="pol-feedback" class="feedback"></div>
-                </div>
-            </div>
-
-            <!-- Panel Ruffini -->
-            <div id="panel-ruf" class="content-panel">
-                <div class="tabs">
-                    <button class="tab-btn active" onclick="showSub('ruf', 'theory')">Teoría</button>
-                    <button class="tab-btn" onclick="showSub('ruf', 'quiz')">Ejercicios</button>
-                    <button class="tab-btn" style="margin-left:auto" onclick="home()">← Volver</button>
-                </div>
-                <div id="ruf-theory" class="theory-section active">
-                    <div class="theory-item">
-                        <h4>Método</h4>
-                        <h3>¿Cómo aplicar la Regla de Ruffini?</h3>
-                        <p>Para dividir P(x) por (x − a): se escriben los coeficientes de P(x) en una fila, se opera con el valor a, y el último número es el resto.</p>
-                        <ul style="margin-left:20px; margin-top:10px">
-                            <li>1) Escribir coeficientes (incluir 0 para términos faltantes)</li>
-                            <li>2) Bajar el primer coeficiente</li>
-                            <li>3) Multiplicar por a, sumar al siguiente</li>
-                            <li>4) Repetir → último valor = RESTO</li>
-                        </ul>
-                    </div>
-                    <div class="theory-item">
-                        <h4>Ejemplo 1</h4>
-                        <h3>Dividir x³ − 6x² + 11x − 6 entre (x − 1)</h3>
-                        <button class="solution-toggle" onclick="toggleSol(this)">Ver tablero</button>
-                        <div class="solution-content">
-                            Coeficientes: 1, −6, 11, −6  |  a = 1
-                            <table class="matrix-table" style="max-width:300px">
-                                <tr><td></td><td>1</td><td>-6</td><td>11</td><td>-6</td></tr>
-                                <tr><td style="border-right:1px solid white">1</td><td></td><td>1</td><td>-5</td><td>6</td></tr>
-                                <tr style="border-top:1px solid white"><td></td><td>1</td><td>-5</td><td>6</td><td>0</td></tr>
-                            </table>
-                            <strong>Cociente:</strong> x² − 5x + 6 | <strong>Resto:</strong> 0
-                        </div>
-                    </div>
-                    <div class="theory-item">
-                        <h4>Ejemplo 2</h4>
-                        <h3>Dividir 2x³ + 3x² − 5x + 1 entre (x − 2)</h3>
-                        <button class="solution-toggle" onclick="toggleSol(this)">Ver tablero</button>
-                        <div class="solution-content">
-                            <table class="matrix-table" style="max-width:300px">
-                                <tr><td></td><td>2</td><td>3</td><td>-5</td><td>1</td></tr>
-                                <tr><td style="border-right:1px solid white">2</td><td></td><td>4</td><td>14</td><td>18</td></tr>
-                                <tr style="border-top:1px solid white"><td></td><td>2</td><td>7</td><td>9</td><td>19</td></tr>
-                            </table>
-                            <strong>Cociente:</strong> 2x² + 7x + 9 | <strong>Resto:</strong> 19
-                        </div>
-                    </div>
-                </div>
-                <div id="ruf-quiz" class="quiz-container">
-                    <div class="quiz-header">
-                        <span id="ruf-progress">0 / 0</span>
-                        <span class="score-display">Correctas: <span id="ruf-score">0</span></span>
-                    </div>
-                    <div class="question-box" id="ruf-question">Cargando...</div>
-                    <div class="options-grid" id="ruf-options"></div>
-                    <div id="ruf-feedback" class="feedback"></div>
-                </div>
-            </div>
-
-            <!-- Panel Teorema Resto -->
-            <div id="panel-res" class="content-panel">
-                <div class="tabs">
-                    <button class="tab-btn active" onclick="showSub('res', 'theory')">Teoría</button>
-                    <button class="tab-btn" onclick="showSub('res', 'quiz')">Ejercicios</button>
-                    <button class="tab-btn" style="margin-left:auto" onclick="home()">← Volver</button>
-                </div>
-                <div id="res-theory" class="theory-section active">
-                    <div class="theory-item">
-                        <h4>Enunciado</h4>
-                        <h3>Teorema del Resto</h3>
-                        <p>Si P(x) se divide por (x − a), <br>el <strong>resto = P(a)</strong></p>
-                        <p style="margin-top:10px">No hace falta dividir. Basta evaluar el polinomio en x = a.</p>
-                    </div>
-                    <div class="theory-item">
-                        <h4>Ejemplo 1</h4>
-                        <h3>P(x) = x³ − 2x² + 3x − 4, divisor (x − 1). Encontrar el resto.</h3>
-                        <button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button>
-                        <div class="solution-content">
-                            P(1) = 1³ − 2(1)² + 3(1) − 4<br>
-                            P(1) = 1 − 2 + 3 − 4 = −2<br>
-                            <strong>Resto = −2</strong>
-                        </div>
-                    </div>
-                    <div class="theory-item">
-                        <h4>Ejemplo 2</h4>
-                        <h3>P(x) = x³ + kx − 6. Si x = 2 es raíz, ¿cuánto vale k?</h3>
-                        <button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button>
-                        <div class="solution-content">
-                            Si x = 2 es raíz, el resto es 0 (P(2) = 0).<br>
-                            2³ + k(2) − 6 = 0<br>
-                            8 + 2k − 6 = 0 → 2k = −2 → k = −1
-                        </div>
-                    </div>
-                </div>
-                <div id="res-quiz" class="quiz-container">
-                    <div class="quiz-header">
-                        <span id="res-progress">0 / 0</span>
-                        <span class="score-display">Correctas: <span id="res-score">0</span></span>
-                    </div>
-                    <div class="question-box" id="res-question">Cargando...</div>
-                    <div class="options-grid" id="res-options"></div>
-                    <div id="res-feedback" class="feedback"></div>
-                </div>
-            </div>
-
-            <!-- Panel Sistemas -->
-            <div id="panel-sis" class="content-panel">
-                <div class="tabs">
-                    <button class="tab-btn active" onclick="showSub('sis', 'theory')">Teoría</button>
-                    <button class="tab-btn" onclick="showSub('sis', 'quiz')">Ejercicios</button>
-                    <button class="tab-btn" style="margin-left:auto" onclick="home()">← Volver</button>
-                </div>
-                <div id="sis-theory" class="theory-section active">
-                    <div class="theory-item">
-                        <h4>Método 1 — Sustitución</h4>
-                        <h3>Resolver: 2x + y = 7 y x − y = 2</h3>
-                        <button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button>
-                        <div class="solution-content">
-                            <strong>Paso 1.</strong> Despejamos x de la 2.ª: x = y + 2<br>
-                            <strong>Paso 2.</strong> Sustituimos en la 1.ª:<br>
-                            2(y + 2) + y = 7 → 2y + 4 + y = 7 → 3y = 3 → y = 1<br>
-                            <strong>Paso 3.</strong> Hallamos x: x = 1 + 2 = 3<br>
-                            <strong>Solución:</strong> x=3, y=1
-                        </div>
-                    </div>
-                    <div class="theory-item">
-                        <h4>Método 2 — Eliminación</h4>
-                        <h3>Resolver: 3x + 2y = 12 y x − 2y = 0</h3>
-                        <button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button>
-                        <div class="solution-content">
-                            Sumamos las ecuaciones:<br>
-                            (3x + x) + (2y - 2y) = 12 + 0<br>
-                            4x = 12 → x = 3<br>
-                            Sustituyendo x=3: 3 - 2y = 0 → y = 3/2
-                        </div>
-                    </div>
-                    <div class="theory-item">
-                        <h4>Método de Gauss</h4>
-                        <h3>¿Cómo funciona el método de Gauss?</h3>
-                        <p>Consiste en transformar la matriz del sistema en una matriz escalonada mediante operaciones elementales:</p>
-                        <ul style="margin-left:20px; margin-top:10px">
-                            <li>F_i ↔ F_j (intercambiar filas)</li>
-                            <li>F_i → k·F_i (multiplicar por escalar k≠0)</li>
-                            <li>F_i → F_i + k·F_j (sumar múltiplo de otra fila)</li>
-                        </ul>
-                    </div>
-                </div>
-                <div id="sis-quiz" class="quiz-container">
-                    <div class="quiz-header">
-                        <span id="sis-progress">0 / 0</span>
-                        <span class="score-display">Correctas: <span id="sis-score">0</span></span>
-                    </div>
-                    <div class="question-box" id="sis-question">Cargando...</div>
-                    <div class="options-grid" id="sis-options"></div>
-                    <div id="sis-feedback" class="feedback"></div>
-                </div>
-            </div>
-
-            <!-- Panel Funciones -->
-            <div id="panel-fun" class="content-panel">
-                <div class="tabs">
-                    <button class="tab-btn active" onclick="showSub('fun', 'theory')">Teoría</button>
-                    <button class="tab-btn" onclick="showSub('fun', 'quiz')">Ejercicios</button>
-                    <button class="tab-btn" style="margin-left:auto" onclick="home()">← Volver</button>
-                </div>
-                <div id="fun-theory" class="theory-section active">
-                    <div class="theory-item">
-                        <h4>Concepto</h4>
-                        <h3>¿Qué es una función?</h3>
-                        <p>Una función f: A → B asigna a cada elemento del dominio A exactamente un elemento del codominio B.</p>
-                        <p style="margin-top:10px">f(x) = 2x + 1 → a cada x le corresponde un único valor</p>
-                    </div>
-                    <div class="theory-item">
-                        <h4>Ejemplo — Dominio</h4>
-                        <h3>f(x) = √(x − 3). ¿Cuál es el dominio?</h3>
-                        <button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button>
-                        <div class="solution-content">
-                            El argumento de la raíz debe ser ≥ 0:<br>
-                            x − 3 ≥ 0 → x ≥ 3<br>
-                            <strong>Dominio:</strong> [3, +∞)
-                        </div>
-                    </div>
-                </div>
-                <div id="fun-quiz" class="quiz-container">
-                    <div class="quiz-header">
-                        <span id="fun-progress">0 / 0</span>
-                        <span class="score-display">Correctas: <span id="fun-score">0</span></span>
-                    </div>
-                    <div class="question-box" id="fun-question">Cargando...</div>
-                    <div class="options-grid" id="fun-options"></div>
-                    <div id="fun-feedback" class="feedback"></div>
-                </div>
-            </div>
-
-            <!-- Panel Factorización -->
-            <div id="panel-fac" class="content-panel">
-                <div class="tabs">
-                    <button class="tab-btn active" onclick="showSub('fac', 'theory')">Teoría</button>
-                    <button class="tab-btn" onclick="showSub('fac', 'quiz')">Ejercicios</button>
-                    <button class="tab-btn" style="margin-left:auto" onclick="home()">← Volver</button>
-                </div>
-                <div id="fac-theory" class="theory-section active">
-                    <div class="theory-item">
-                        <h4>Factor común</h4>
-                        <h3>Factorizar: 6x³ − 9x² + 3x</h3>
-                        <button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button>
-                        <div class="solution-content">
-                            3x es el común denominador:<br>
-                            3x(2x² − 3x + 1) = 3x(2x−1)(x−1)
-                        </div>
-                    </div>
-                    <div class="theory-item">
-                        <h4>Diferencia de cuadrados</h4>
-                        <h3>Factorizar: 4x² − 25</h3>
-                        <button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button>
-                        <div class="solution-content">
-                            Usa la fórmula (a² - b²) = (a+b)(a-b):<br>
-                            (2x)² − 5² = (2x + 5)(2x − 5)
-                        </div>
-                    </div>
-                    <div class="theory-item">
-                        <h4>Trinomio cuadrado perfecto</h4>
-                        <h3>Factorizar: x² + 6x + 9</h3>
-                        <button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button>
-                        <div class="solution-content">
-                            Busca la forma (a + b)² = a² + 2ab + b²:<br>
-                            x² + 2(3)x + 3² = (x + 3)²
-                        </div>
-                    </div>
-                </div>
-                <div id="fac-quiz" class="quiz-container">
-                    <div class="quiz-header">
-                        <span id="fac-progress">0 / 0</span>
-                        <span class="score-display">Correctas: <span id="fac-score">0</span></span>
-                    </div>
-                    <div class="question-box" id="fac-question">Cargando...</div>
-                    <div class="options-grid" id="fac-options"></div>
-                    <div id="fac-feedback" class="feedback"></div>
-                </div>
-            </div>
-
-            <!-- Panel Números Irracionales (ACTUALIZADO COMPLETO) -->
-            <div id="panel-irr" class="content-panel">
-                <div class="tabs">
-                    <button class="tab-btn active" onclick="showSub('irr', 'theory')">Teoría</button>
-                    <button class="tab-btn" onclick="showSub('irr', 'quiz')">Ejercicios</button>
-                    <button class="tab-btn" style="margin-left:auto" onclick="home()">← Volver</button>
-                </div>
-                <div id="irr-theory" class="theory-section active">
-                    <div class="theory-item">
-                        <h4>Concepto</h4>
-                        <h3>¿Qué son los números irracionales?</h3>
-                        <p>Son números que no pueden expresarse como fracción. Su decimal es infinito y no periódico.</p>
-                        <p style="margin-top:10px">Ejemplos: √2, √3, π (Pi), e</p>
-                    </div>
-                    <div class="theory-item">
-                        <h4>Extracción de Factores</h4>
-                        <h3>Simplificar: √50</h3>
-                        <button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button>
-                        <div class="solution-content">
-                            Factorizamos 50: 50 = 2 · 5²<br>
-                            √50 = √(2 · 5²) = 5√2
-                        </div>
-                    </div>
-                    <div class="theory-item">
-                        <h4>Suma de radicales</h4>
-                        <h3>Simplificar: 3√2 + 5√2</h3>
-                        <button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button>
-                        <div class="solution-content">
-                            Se suman los coeficientes cuando el radicando es igual:<br>
-                            (3 + 5)√2 = 8√2
-                        </div>
-                    </div>
-                    <div class="theory-item">
-                        <h4>Multiplicación de radicales</h4>
-                        <h3>Calcular: √3 · √12</h3>
-                        <button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button>
-                        <div class="solution-content">
-                            Propiedad: √a · √b = √(a · b)<br>
-                            √3 · √12 = √36 = 6
-                        </div>
-                    </div>
-                    <div class="theory-item">
-                        <h4>Racionalización de Denominadores</h4>
-                        <h3>Quitar la raíz del denominador: 1 / √2</h3>
-                        <button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button>
-                        <div class="solution-content">
-                            Multiplicamos arriba y abajo por √2:<br>
-                            (1 · √2) / (√2 · √2) = √2 / 2
-                        </div>
-                    </div>
-                </div>
-                <div id="irr-quiz" class="quiz-container">
-                    <div class="quiz-header">
-                        <span id="irr-progress">0 / 0</span>
-                        <span class="score-display">Correctas: <span id="irr-score">0</span></span>
-                    </div>
-                    <div class="question-box" id="irr-question">Cargando...</div>
-                    <div class="options-grid" id="irr-options"></div>
-                    <div id="irr-feedback" class="feedback"></div>
-                </div>
-            </div>
-
-            <!-- Panel Números Complejos (CORREGIDO) -->
-            <div id="panel-com" class="content-panel">
-                <div class="tabs">
-                    <button class="tab-btn active" onclick="showSub('com', 'theory')">Teoría</button>
-                    <button class="tab-btn" onclick="showSub('com', 'quiz')">Ejercicios</button>
-                    <button class="tab-btn" style="margin-left:auto" onclick="home()">← Volver</button>
-                </div>
-                <div id="com-theory" class="theory-section active">
-                    <div class="theory-item">
-                        <h4>Concepto</h4>
-                        <h3>¿Qué es un número complejo?</h3>
-                        <p>Es un número de la forma <strong>z = a + bi</strong>, donde <strong>a</strong> es la parte real y <strong>bi</strong> la parte imaginaria.</p>
-                        <p><strong>i = √(-1)</strong></p>
-                    </div>
-                    <div class="theory-item">
-                        <h4>Potencias de i</h4>
-                        <table style="max-width:200px">
-                            <tr><td>i⁰</td><td>1</td></tr>
-                            <tr><td>i¹</td><td>i</td></tr>
-                            <tr><td>i²</td><td>-1</td></tr>
-                            <tr><td>i³</td><td>-i</td></tr>
-                        </table>
-                    </div>
-                    <div class="theory-item">
-                        <h4>Suma y Resta</h4>
-                        <h3>(3 + 2i) + (1 + 4i)</h3>
-                        <button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button>
-                        <div class="solution-content">
-                            Sumamos reales con reales e imaginarios con imaginarios:<br>
-                            (3+1) + (2+4)i = 4 + 6i
-                        </div>
-                    </div>
-                    <div class="theory-item">
-                        <h4>Módulo de un complejo</h4>
-                        <h3>|3 + 4i|</h3>
-                        <button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button>
-                        <div class="solution-content">
-                            Fórmula: |z| = √(a² + b²)<br>
-                            √(3² + 4²) = √(9+16) = √25 = 5
-                        </div>
-                    </div>
-                </div>
-                <div id="com-quiz" class="quiz-container">
-                    <div class="quiz-header">
-                        <span id="com-progress">0 / 0</span>
-                        <span class="score-display">Correctas: <span id="com-score">0</span></span>
-                    </div>
-                    <div class="question-box" id="com-question">Cargando...</div>
-                    <div class="options-grid" id="com-options"></div>
-                    <div id="com-feedback" class="feedback"></div>
-                </div>
-            </div>
-
-        </div> <!-- end #app -->
-
-        <footer>
-            Matemática III &middot; EET N° 3117 "Daniel Oscar Reyes" &middot; 2026<br>
-            <div style="margin-top:10px">
-                <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fvictorsoria800-cmd.github.io%2Fmatematica3%2F&count_bg=%236366F1&title_bg=%231E293B&icon=&icon_color=%23E7E7E7&title=visitas&edge_flat=false"/></a>
-            </div>
-        </footer>
+        <button class="btn-main" onclick="startApp()">Comenzar →</button>
     </div>
 
-    <script>
-        let userName = "";
-        let totalScore = 0;
-        let currentQuizName = "";
-        let currentQuestionIndex = 0;
+    <div id="app">
+        <div id="greeting">
+            <h2 id="welcome-msg">Hola 👋</h2>
+            <div class="score-display">Puntaje total: <span id="total-score">0</span></div>
+        </div>
+        <p style="margin-bottom:2rem;color:var(--text-dim)">Elegí un tema para practicar</p>
 
-        const quizzes = {
-            pol: [
-                { q: "¿Cuál es el grado de P(x) = 3x⁴ - 2x² + 5?", o: ["2", "3", "4", "5"], a: 2, e: "El grado es el exponente más alto de la variable x." },
-                { q: "Si P(x) = x + 2 y Q(x) = x - 2, ¿cuánto es P(x) + Q(x)?", o: ["2x", "x²", "4", "0"], a: 0, e: "x + 2 + x - 2 = 2x." },
-                { q: "P(x) = 2x - 1, P(2) es:", o: ["1", "2", "3", "4"], a: 2, e: "2(2) - 1 = 4 - 1 = 3." }
-            ],
-            ruf: [
-                { q: "En Ruffini, si el divisor es (x - 3), ¿qué valor de 'a' usamos?", o: ["-3", "3", "0", "1"], a: 1, e: "Se usa el valor que anula el divisor: x-3=0 -> x=3." },
-                { q: "¿Qué representa el último número obtenido en la Regla de Ruffini?", o: ["Cero", "El Cociente", "El Resto", "El Grado"], a: 2, e: "El último valor a la derecha siempre es el resto." }
-            ],
-            res: [
-                { q: "Sin dividir, el resto de (x² - 4) / (x - 2) es:", o: ["-4", "4", "2", "0"], a: 3, e: "P(2) = 2² - 4 = 4 - 4 = 0." },
-                { q: "Si P(-1) = 5, el resto de dividir P(x) por (x + 1) es:", o: ["1", "-1", "5", "0"], a: 2, e: "Por el Teorema del Resto, el resto es igual a P(a)." }
-            ],
-            sis: [
-                { q: "Si x + y = 5 y x - y = 1, entonces:", o: ["x=2, y=3", "x=3, y=2", "x=4, y=1", "x=5, y=0"], a: 1, e: "3+2=5 y 3-2=1." },
-                { q: "Un sistema que NO tiene solución se llama:", o: ["S. Compatible Determinado", "S. Incompatible", "S. Compatible Indeterminado", "Ninguno"], a: 1, e: "Incompatible significa que las rectas son paralelas y no se cruzan." }
-            ],
-            fun: [
-                { q: "¿Cuál es la imagen de f(x) = x²?", o: ["Todos los reales", "Reales negativos", "Reales positivos y el cero", "Solo el cero"], a: 2, e: "Una potencia par nunca da resultado negativo." },
-                { q: "Si f(x) = 2x, ¿cuál es f(5)?", o: ["2", "5", "10", "2.5"], a: 2, e: "2 * 5 = 10." }
-            ],
-            fac: [
-                { q: "Factor común de: 5x + 10", o: ["5", "x", "10", "5x"], a: 0, e: "Ambos números son divisibles por 5: 5(x + 2)." },
-                { q: "Factorizar (x² - 9):", o: ["(x-3)²", "(x+3)²", "(x-3)(x+3)", "3(x-3)"], a: 2, e: "Es una diferencia de cuadrados: a² - b² = (a-b)(a+b)." }
-            ],
-            irr: [
-                { q: "¿Cuánto es √2 + √2?", o: ["√4", "2", "2√2", "√2²"], a: 2, e: "Se suman como términos semejantes: 1√2 + 1√2 = 2√2." },
-                { q: "¿Cuál es la simplificación de √8?", o: ["4", "2√2", "2√4", "4√2"], a: 1, e: "√8 = √(4·2) = 2√2." },
-                { q: "√3 · √3 es igual a:", o: ["√6", "9", "3", "3√3"], a: 2, e: "√3 · √3 = √9 = 3." },
-                { q: "¿Qué número es irracional?", o: ["√4", "3.14", "π (Pi)", "1/2"], a: 2, e: "Pi tiene infinitos decimales no periódicos." }
-            ],
-            com: [
-                { q: "¿Cuánto vale i²?", o: ["1", "-1", "i", "-i"], a: 1, e: "Por definición i = √(-1), entonces i² = -1." },
-                { q: "El módulo de (3 + 4i) es:", o: ["7", "1", "5", "25"], a: 2, e: "√(3² + 4²) = √25 = 5." },
-                { q: "Parte imaginaria de z = 5 - 2i:", o: ["5", "2", "-2", "i"], a: 2, e: "Es el número que acompaña a la 'i'." }
-            ]
-        };
+        <div class="topics-grid">
+            <div class="topic-card" onclick="showTopic('pol')"><span class="topic-icon">📐</span><h3>Polinomios</h3><p>Operaciones y propiedades</p></div>
+            <div class="topic-card" onclick="showTopic('ruf')"><span class="topic-icon">➗</span><h3>Regla de Ruffini</h3><p>División de polinomios</p></div>
+            <div class="topic-card" onclick="showTopic('res')"><span class="topic-icon">🧮</span><h3>Teorema del Resto</h3><p>Resto sin dividir</p></div>
+            <div class="topic-card" onclick="showTopic('sis')"><span class="topic-icon">⚖️</span><h3>Sistemas de Ecuaciones</h3><p>Sustitución, Gauss y más</p></div>
+            <div class="topic-card" onclick="showTopic('fun')"><span class="topic-icon">📈</span><h3>Funciones</h3><p>Dominio, imagen, gráficas</p></div>
+            <div class="topic-card" onclick="showTopic('fac')"><span class="topic-icon">🔢</span><h3>Factorización</h3><p>Factor común y casos</p></div>
+            <div class="topic-card" onclick="showTopic('irr')"><span class="topic-icon">🟰</span><h3>Números Irracionales</h3><p>Operaciones y propiedades</p></div>
+            <div class="topic-card" onclick="showTopic('com')"><span class="topic-icon">🔷</span><h3>Números Complejos</h3><p>Operaciones y gráfica</p></div>
+        </div>
 
-        const topicTitles = {
-            pol: "Polinomios", ruf: "Regla de Ruffini", res: "Teorema del Resto",
-            sis: "Sistemas de Ecuaciones", fun: "Funciones", fac: "Factorización",
-            irr: "Números Irracionales", com: "Números Complejos"
-        };
+        <!-- POLINOMIOS -->
+        <div id="panel-pol" class="content-panel">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showSub('pol','theory')">Teoría</button>
+                <button class="tab-btn" onclick="showSub('pol','quiz')">Ejercicios</button>
+                <button class="tab-btn" style="margin-left:auto" onclick="home()">← Volver</button>
+            </div>
+            <div id="pol-theory" class="theory-section active">
+                <div class="theory-item"><h4>Concepto</h4><h3>¿Qué es un polinomio?</h3><p>Un polinomio es una expresión algebraica de la forma:<br><br><strong>P(x) = aₙxⁿ + aₙ₋₁xⁿ⁻¹ + … + a₁x + a₀</strong><br><br>donde aₙ ≠ 0 es el coeficiente líder y n es el grado.</p></div>
+                <div class="theory-item"><h4>Ejemplo — Suma</h4><h3>P(x) = 3x² + 2x − 1 y Q(x) = x² − 5x + 4</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">Agrupamos semejantes:<br>(3+1)x² + (2−5)x + (−1+4)<br><strong>Resultado: 4x² − 3x + 3</strong></div></div>
+                <div class="theory-item"><h4>Ejemplo — Multiplicación</h4><h3>(x + 2)(x − 3)</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">x·x + x·(−3) + 2·x + 2·(−3)<br>= x² − 3x + 2x − 6<br><strong>Resultado: x² − x − 6</strong></div></div>
+            </div>
+            <div id="pol-quiz" class="quiz-container">
+                <div class="quiz-header"><span id="pol-progress">0/0</span><span class="score-display">Correctas: <span id="pol-score">0</span></span></div>
+                <div class="question-box" id="pol-question">Cargando...</div>
+                <div class="options-grid" id="pol-options"></div>
+                <div id="pol-feedback" class="feedback"></div>
+            </div>
+        </div>
 
-        function startApp() {
-            const input = document.getElementById('user-name');
-            if (input.value.trim() === "") {
-                alert("Por favor, ingresá tu nombre.");
-                return;
-            }
-            userName = input.value;
-            document.getElementById('login-view').style.display = 'none';
-            document.getElementById('app').style.display = 'block';
-            document.getElementById('welcome-msg').innerText = `Hola, ${userName} 👋`;
-        }
+        <!-- RUFFINI -->
+        <div id="panel-ruf" class="content-panel">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showSub('ruf','theory')">Teoría</button>
+                <button class="tab-btn" onclick="showSub('ruf','quiz')">Ejercicios</button>
+                <button class="tab-btn" style="margin-left:auto" onclick="home()">← Volver</button>
+            </div>
+            <div id="ruf-theory" class="theory-section active">
+                <div class="theory-item"><h4>Método</h4><h3>¿Cómo aplicar la Regla de Ruffini?</h3><p>Para dividir P(x) por (x − a):</p><ul style="margin-left:20px;margin-top:10px"><li>1) Escribir coeficientes (0 para términos faltantes)</li><li>2) Bajar el primer coeficiente</li><li>3) Multiplicar por a, sumar al siguiente</li><li>4) Repetir → último valor = RESTO</li></ul></div>
+                <div class="theory-item"><h4>Ejemplo 1</h4><h3>x³ − 6x² + 11x − 6 ÷ (x − 1)</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver tablero</button><div class="solution-content">Coeficientes: 1, −6, 11, −6 | a=1<br><br>1 | 1 &nbsp; −6 &nbsp; 11 &nbsp; −6<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓1 &nbsp; ↓−5 &nbsp; ↓6<br>&nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp; −5 &nbsp;&nbsp; 6 &nbsp;&nbsp; 0<br><br><strong>Cociente: x²−5x+6 | Resto: 0</strong></div></div>
+                <div class="theory-item"><h4>Ejemplo 2</h4><h3>2x³ + 3x² − 5x + 1 ÷ (x − 2)</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver tablero</button><div class="solution-content">2 | 2 &nbsp; 3 &nbsp; −5 &nbsp; 1<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓4 &nbsp; ↓14 &nbsp; ↓18<br>&nbsp;&nbsp;&nbsp;&nbsp;2 &nbsp; 7 &nbsp;&nbsp; 9 &nbsp;&nbsp; 19<br><br><strong>Cociente: 2x²+7x+9 | Resto: 19</strong></div></div>
+            </div>
+            <div id="ruf-quiz" class="quiz-container">
+                <div class="quiz-header"><span id="ruf-progress">0/0</span><span class="score-display">Correctas: <span id="ruf-score">0</span></span></div>
+                <div class="question-box" id="ruf-question">Cargando...</div>
+                <div class="options-grid" id="ruf-options"></div>
+                <div id="ruf-feedback" class="feedback"></div>
+            </div>
+        </div>
 
-        function showTopic(topic) {
-            document.querySelectorAll('.content-panel').forEach(p => p.style.display = 'none');
-            document.querySelector('.topics-grid').style.display = 'none';
-            document.getElementById(`panel-${topic}`).style.display = 'block';
-            showSub(topic, 'theory');
-        }
+        <!-- TEOREMA DEL RESTO -->
+        <div id="panel-res" class="content-panel">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showSub('res','theory')">Teoría</button>
+                <button class="tab-btn" onclick="showSub('res','quiz')">Ejercicios</button>
+                <button class="tab-btn" style="margin-left:auto" onclick="home()">← Volver</button>
+            </div>
+            <div id="res-theory" class="theory-section active">
+                <div class="theory-item"><h4>Enunciado</h4><h3>Teorema del Resto</h3><p>Si P(x) se divide por (x − a), el <strong>resto = P(a)</strong>.<br>No hace falta dividir, basta evaluar en x = a.</p></div>
+                <div class="theory-item"><h4>Ejemplo 1</h4><h3>P(x) = x³ − 2x² + 3x − 4, divisor (x − 1)</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">P(1) = 1 − 2 + 3 − 4 = −2<br><strong>Resto = −2</strong></div></div>
+                <div class="theory-item"><h4>Ejemplo 2</h4><h3>P(x) = x³ + kx − 6. Si x=2 es raíz, ¿cuánto vale k?</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">P(2) = 0 → 8 + 2k − 6 = 0 → k = −1</div></div>
+            </div>
+            <div id="res-quiz" class="quiz-container">
+                <div class="quiz-header"><span id="res-progress">0/0</span><span class="score-display">Correctas: <span id="res-score">0</span></span></div>
+                <div class="question-box" id="res-question">Cargando...</div>
+                <div class="options-grid" id="res-options"></div>
+                <div id="res-feedback" class="feedback"></div>
+            </div>
+        </div>
 
-        function showSub(topic, type) {
-            const panel = document.getElementById(`panel-${topic}`);
-            const buttons = panel.querySelectorAll('.tab-btn');
-            buttons[0].classList.toggle('active', type === 'theory');
-            buttons[1].classList.toggle('active', type === 'quiz');
+        <!-- SISTEMAS -->
+        <div id="panel-sis" class="content-panel">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showSub('sis','theory')">Teoría</button>
+                <button class="tab-btn" onclick="showSub('sis','quiz')">Ejercicios</button>
+                <button class="tab-btn" style="margin-left:auto" onclick="home()">← Volver</button>
+            </div>
+            <div id="sis-theory" class="theory-section active">
+                <div class="theory-item"><h4>Método 1 — Sustitución</h4><h3>2x + y = 7 y x − y = 2</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">De la 2ª: x = y+2<br>2(y+2)+y=7 → 3y=3 → y=1<br>x=3<br><strong>Solución: x=3, y=1</strong></div></div>
+                <div class="theory-item"><h4>Método 2 — Eliminación</h4><h3>3x + 2y = 12 y x − 2y = 0</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">Sumamos: 4x=12 → x=3<br>3−2y=0 → y=3/2</div></div>
+                <div class="theory-item"><h4>Método de Gauss</h4><p>Operaciones elementales sobre filas:<br>• F_i ↔ F_j (intercambiar)<br>• F_i → k·F_i (multiplicar)<br>• F_i → F_i + k·F_j (combinar)</p></div>
+            </div>
+            <div id="sis-quiz" class="quiz-container">
+                <div class="quiz-header"><span id="sis-progress">0/0</span><span class="score-display">Correctas: <span id="sis-score">0</span></span></div>
+                <div class="question-box" id="sis-question">Cargando...</div>
+                <div class="options-grid" id="sis-options"></div>
+                <div id="sis-feedback" class="feedback"></div>
+            </div>
+        </div>
 
-            panel.querySelector('.theory-section').classList.toggle('active', type === 'theory');
-            panel.querySelector('.quiz-container').classList.toggle('active', type === 'quiz');
+        <!-- FUNCIONES -->
+        <div id="panel-fun" class="content-panel">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showSub('fun','theory')">Teoría</button>
+                <button class="tab-btn" onclick="showSub('fun','quiz')">Ejercicios</button>
+                <button class="tab-btn" style="margin-left:auto" onclick="home()">← Volver</button>
+            </div>
+            <div id="fun-theory" class="theory-section active">
+                <div class="theory-item"><h4>Concepto</h4><h3>¿Qué es una función?</h3><p>Una función f: A → B asigna a cada elemento del dominio A exactamente un elemento del codominio B.<br><br>f(x) = 2x + 1 → a cada x le corresponde un único valor.</p></div>
+                <div class="theory-item"><h4>Ejemplo — Dominio</h4><h3>f(x) = √(x − 3)</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">x − 3 ≥ 0 → x ≥ 3<br><strong>Dominio: [3, +∞)</strong></div></div>
+            </div>
+            <div id="fun-quiz" class="quiz-container">
+                <div class="quiz-header"><span id="fun-progress">0/0</span><span class="score-display">Correctas: <span id="fun-score">0</span></span></div>
+                <div class="question-box" id="fun-question">Cargando...</div>
+                <div class="options-grid" id="fun-options"></div>
+                <div id="fun-feedback" class="feedback"></div>
+            </div>
+        </div>
 
-            if (type === 'quiz') {
-                initQuiz(topic);
-            }
-        }
+        <!-- FACTORIZACIÓN -->
+        <div id="panel-fac" class="content-panel">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showSub('fac','theory')">Teoría</button>
+                <button class="tab-btn" onclick="showSub('fac','quiz')">Ejercicios</button>
+                <button class="tab-btn" style="margin-left:auto" onclick="home()">← Volver</button>
+            </div>
+            <div id="fac-theory" class="theory-section active">
+                <div class="theory-item"><h4>Factor común</h4><h3>Factorizar: 6x³ − 9x² + 3x</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">3x(2x² − 3x + 1) = 3x(2x−1)(x−1)</div></div>
+                <div class="theory-item"><h4>Diferencia de cuadrados</h4><h3>Factorizar: 4x² − 25</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">(2x+5)(2x−5)</div></div>
+                <div class="theory-item"><h4>Trinomio cuadrado perfecto</h4><h3>Factorizar: x² + 6x + 9</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">(x+3)²</div></div>
+            </div>
+            <div id="fac-quiz" class="quiz-container">
+                <div class="quiz-header"><span id="fac-progress">0/0</span><span class="score-display">Correctas: <span id="fac-score">0</span></span></div>
+                <div class="question-box" id="fac-question">Cargando...</div>
+                <div class="options-grid" id="fac-options"></div>
+                <div id="fac-feedback" class="feedback"></div>
+            </div>
+        </div>
 
-        function home() {
-            document.querySelectorAll('.content-panel').forEach(p => p.style.display = 'none');
-            document.querySelector('.topics-grid').style.display = 'flex';
-            document.querySelector('.topics-grid').style.flexWrap = 'wrap';
-            document.querySelector('.topics-grid').style.display = 'grid'; // restaurar grid
-        }
+        <!-- NÚMEROS IRRACIONALES -->
+        <div id="panel-irr" class="content-panel">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showSub('irr','theory')">Teoría</button>
+                <button class="tab-btn" onclick="showSub('irr','quiz')">Ejercicios</button>
+                <button class="tab-btn" style="margin-left:auto" onclick="home()">← Volver</button>
+            </div>
+            <div id="irr-theory" class="theory-section active">
+                <div class="theory-item"><h4>Concepto</h4><h3>¿Qué son los números irracionales?</h3><p>Son números que <strong>no pueden expresarse como fracción</strong>. Su decimal es infinito y no periódico.<br><br>Ejemplos: √2 ≈ 1,41421…, √3 ≈ 1,73205…, π ≈ 3,14159…, e ≈ 2,71828…</p></div>
+                <div class="theory-item"><h4>Extracción de Factores</h4><h3>Simplificar: √50</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">Descomponemos 50 en factores primos:<br>50 = 2 · 5²<br>√50 = √(2 · 5²) = 5√2<br><strong>Resultado: 5√2</strong></div></div>
+                <div class="theory-item"><h4>Extracción de Factores</h4><h3>Simplificar: √72</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">72 = 8 · 9 = 2³ · 3²<br>√72 = √(4 · 18) = 2√18 = 2·3√2 = 6√2<br><strong>Resultado: 6√2</strong></div></div>
+                <div class="theory-item"><h4>Suma y Resta de Radicales</h4><h3>Simplificar: 3√2 + 5√2</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">Solo se suman cuando el radicando es igual:<br>(3 + 5)√2 = <strong>8√2</strong></div></div>
+                <div class="theory-item"><h4>Suma y Resta de Radicales</h4><h3>Simplificar: √12 + √27</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">√12 = 2√3<br>√27 = 3√3<br>2√3 + 3√3 = <strong>5√3</strong></div></div>
+                <div class="theory-item"><h4>Multiplicación de Radicales</h4><h3>Calcular: √3 · √12</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">Propiedad: √a · √b = √(a·b)<br>√3 · √12 = √36 = <strong>6</strong></div></div>
+                <div class="theory-item"><h4>Multiplicación de Radicales</h4><h3>Calcular: 2√5 · 3√5</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">Multiplicamos coeficientes y radicandos por separado:<br>(2·3) · √(5·5) = 6 · √25 = 6 · 5 = <strong>30</strong></div></div>
+                <div class="theory-item"><h4>Racionalización de Denominadores</h4><h3>Simplificar: 1 / √2</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">Multiplicamos arriba y abajo por √2:<br>(1 · √2) / (√2 · √2) = √2 / 2<br><strong>Resultado: √2/2</strong></div></div>
+                <div class="theory-item"><h4>Racionalización de Denominadores</h4><h3>Simplificar: 6 / √3</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">Multiplicamos por √3/√3:<br>(6√3) / (√3·√3) = 6√3 / 3 = <strong>2√3</strong></div></div>
+            </div>
+            <div id="irr-quiz" class="quiz-container">
+                <div class="quiz-header"><span id="irr-progress">0/0</span><span class="score-display">Correctas: <span id="irr-score">0</span></span></div>
+                <div class="question-box" id="irr-question">Cargando...</div>
+                <div class="options-grid" id="irr-options"></div>
+                <div id="irr-feedback" class="feedback"></div>
+            </div>
+        </div>
 
-        function initQuiz(topic) {
-            currentQuizName = topic;
-            currentQuestionIndex = 0;
+        <!-- NÚMEROS COMPLEJOS -->
+        <div id="panel-com" class="content-panel">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showSub('com','theory')">Teoría</button>
+                <button class="tab-btn" onclick="showSub('com','quiz')">Ejercicios</button>
+                <button class="tab-btn" style="margin-left:auto" onclick="home()">← Volver</button>
+            </div>
+            <div id="com-theory" class="theory-section active">
+                <div class="theory-item"><h4>Concepto</h4><h3>¿Qué es un número complejo?</h3><p>Es un número de la forma <strong>z = a + bi</strong>, donde:<br>• <strong>a</strong> = parte real<br>• <strong>b</strong> = parte imaginaria<br>• <strong>i = √(−1)</strong>, por lo tanto <strong>i² = −1</strong></p></div>
+                <div class="theory-item"><h4>Potencias de i</h4><table><tr><th>Potencia</th><th>Valor</th></tr><tr><td>i¹</td><td>i</td></tr><tr><td>i²</td><td>−1</td></tr><tr><td>i³</td><td>−i</td></tr><tr><td>i⁴</td><td>1</td></tr><tr><td>i⁵</td><td>i (ciclo se repite)</td></tr></table><p style="margin-top:10px">Regla: dividí el exponente por 4 y usá el resto: 0→1, 1→i, 2→−1, 3→−i</p></div>
+                <div class="theory-item"><h4>Suma y Resta</h4><h3>(3 + 5i) + (2 − 3i)</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">Sumamos reales con reales, imaginarios con imaginarios:<br>(3+2) + (5−3)i = <strong>5 + 2i</strong></div></div>
+                <div class="theory-item"><h4>Suma y Resta</h4><h3>(7 − 2i) − (4 + 6i)</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">(7−4) + (−2−6)i = <strong>3 − 8i</strong></div></div>
+                <div class="theory-item"><h4>Multiplicación</h4><h3>(2 + 3i)(1 − 4i)</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">Distributiva: 2·1 + 2·(−4i) + 3i·1 + 3i·(−4i)<br>= 2 − 8i + 3i − 12i²<br>= 2 − 5i − 12(−1)<br>= 2 − 5i + 12 = <strong>14 − 5i</strong></div></div>
+                <div class="theory-item"><h4>Módulo</h4><h3>|3 + 4i|</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">Fórmula: |z| = √(a² + b²)<br>√(3² + 4²) = √(9+16) = √25 = <strong>5</strong></div></div>
+                <div class="theory-item"><h4>División (conjugado)</h4><h3>(3 + 2i) / (1 + 4i)</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">Multiplicamos por el conjugado (1−4i):<br>Numerador: (3+2i)(1−4i) = 3−12i+2i−8i² = 3−10i+8 = 11−10i<br>Denominador: 1²+4² = 17<br><strong>Resultado: (11−10i)/17 ≈ 0,647 − 0,588i</strong></div></div>
+                <div class="theory-item"><h4>Forma Polar</h4><h3>z = 3 + 4i → Forma polar</h3><button class="solution-toggle" onclick="toggleSol(this)">Ver solución</button><div class="solution-content">r = |z| = √(9+16) = 5<br>θ = arctan(4/3) ≈ 53,13°<br><strong>z = 5∠53,13°</strong></div></div>
+            </div>
+            <div id="com-quiz" class="quiz-container">
+                <div class="quiz-header"><span id="com-progress">0/0</span><span class="score-display">Correctas: <span id="com-score">0</span></span></div>
+                <div class="question-box" id="com-question">Cargando...</div>
+                <div class="options-grid" id="com-options"></div>
+                <div id="com-feedback" class="feedback"></div>
+            </div>
+        </div>
+
+    </div><!-- fin #app -->
+
+    <footer>
+        Matemática III · EET N° 3117 "Daniel Oscar Reyes" · 2026<br>
+        <div style="margin-top:10px">
+            <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fvictorsoria800-cmd.github.io%2Fmatematica3%2F&count_bg=%236366F1&title_bg=%231E293B&icon=&icon_color=%23E7E7E7&title=visitas&edge_flat=false"/></a>
+        </div>
+    </footer>
+</div>
+
+<script>
+let userName = "";
+let totalScore = 0;
+let currentQuizName = "";
+let currentQuestionIndex = 0;
+
+const quizzes = {
+    pol: [
+        { q:"¿Cuál es el grado de P(x) = 3x⁴ − 2x² + 5?", o:["2","3","4","5"], a:2, e:"El grado es el exponente más alto." },
+        { q:"P(x) = x + 2 y Q(x) = x − 2. ¿Cuánto es P(x) + Q(x)?", o:["2x","x²","4","0"], a:0, e:"x+2+x−2 = 2x." },
+        { q:"P(x) = 2x − 1. ¿Cuánto es P(2)?", o:["1","2","3","4"], a:2, e:"2(2)−1 = 3." },
+        { q:"¿Cuál es el coeficiente líder de 5x³ − 2x + 1?", o:["1","−2","5","3"], a:2, e:"El coeficiente líder es el del término de mayor grado." }
+    ],
+    ruf: [
+        { q:"En Ruffini, si el divisor es (x − 3), ¿qué valor de 'a' usamos?", o:["−3","3","0","1"], a:1, e:"Se usa el valor que anula el divisor: x−3=0 → x=3." },
+        { q:"¿Qué representa el último número en la Regla de Ruffini?", o:["Cero","El Cociente","El Resto","El Grado"], a:2, e:"El último valor siempre es el resto." },
+        { q:"Al dividir x² − 5x + 6 por (x − 2) con Ruffini, el resto es:", o:["0","2","−2","6"], a:0, e:"P(2) = 4−10+6 = 0." }
+    ],
+    res: [
+        { q:"Sin dividir, el resto de (x² − 4) ÷ (x − 2) es:", o:["−4","4","2","0"], a:3, e:"P(2) = 4−4 = 0." },
+        { q:"Si P(−1) = 5, el resto de P(x) ÷ (x + 1) es:", o:["1","−1","5","0"], a:2, e:"Por el Teorema del Resto, el resto es P(a)." },
+        { q:"P(x) = x³ − 1. El resto al dividir por (x − 1) es:", o:["0","1","−1","2"], a:0, e:"P(1) = 1−1 = 0." }
+    ],
+    sis: [
+        { q:"Si x + y = 5 y x − y = 1, entonces:", o:["x=2,y=3","x=3,y=2","x=4,y=1","x=5,y=0"], a:1, e:"3+2=5 y 3−2=1." },
+        { q:"Un sistema sin solución se llama:", o:["Compatible Determinado","Incompatible","Compatible Indeterminado","Ninguno"], a:1, e:"Incompatible: las rectas son paralelas." },
+        { q:"¿Cuántas soluciones tiene un sistema compatible indeterminado?", o:["0","1","2","Infinitas"], a:3, e:"Las ecuaciones representan la misma recta." }
+    ],
+    fun: [
+        { q:"¿Cuál es la imagen de f(x) = x²?", o:["Todos los reales","Reales negativos","Reales ≥ 0","Solo el cero"], a:2, e:"Una potencia par nunca da resultado negativo." },
+        { q:"Si f(x) = 2x, ¿cuánto es f(5)?", o:["2","5","10","2.5"], a:2, e:"2·5 = 10." },
+        { q:"El dominio de f(x) = 1/x es:", o:["Todos los reales","Reales excepto 0","Solo positivos","Solo negativos"], a:1, e:"No se puede dividir por cero." }
+    ],
+    fac: [
+        { q:"Factor común de 5x + 10:", o:["5","x","10","5x"], a:0, e:"5(x+2)." },
+        { q:"Factorizar x² − 9:", o:["(x−3)²","(x+3)²","(x−3)(x+3)","3(x−3)"], a:2, e:"Diferencia de cuadrados: a²−b² = (a−b)(a+b)." },
+        { q:"Factorizar x² + 4x + 4:", o:["(x+2)²","(x−2)²","(x+4)(x+1)","(x+2)(x−2)"], a:0, e:"Trinomio cuadrado perfecto: (x+2)²." }
+    ],
+    irr: [
+        { q:"¿Cuánto es √2 + √2?", o:["√4","2","2√2","√2²"], a:2, e:"1√2 + 1√2 = 2√2." },
+        { q:"¿Cuál es la simplificación de √8?", o:["4","2√2","2√4","4√2"], a:1, e:"√8 = √(4·2) = 2√2." },
+        { q:"√3 · √3 es igual a:", o:["√6","9","3","3√3"], a:2, e:"√3·√3 = √9 = 3." },
+        { q:"¿Qué número es irracional?", o:["√4","3,14","π","1/2"], a:2, e:"Pi tiene infinitos decimales no periódicos." },
+        { q:"Simplificar √50:", o:["5√2","25√2","10","2√5"], a:0, e:"50=2·5², entonces √50=5√2." },
+        { q:"Racionalizar 1/√3:", o:["√3","√3/3","3","1/3"], a:1, e:"(1·√3)/(√3·√3) = √3/3." },
+        { q:"Simplificar √12 + √27:", o:["√39","5√3","6√3","3√4"], a:1, e:"√12=2√3, √27=3√3, suma=5√3." },
+        { q:"2√5 · 3√5 es igual a:", o:["6√5","30","6√25","5√6"], a:1, e:"(2·3)·√(5·5) = 6·5 = 30." }
+    ],
+    com: [
+        { q:"¿Cuánto vale i²?", o:["1","−1","i","−i"], a:1, e:"Por definición i=√(−1), entonces i²=−1." },
+        { q:"El módulo de (3 + 4i) es:", o:["7","1","5","25"], a:2, e:"√(3²+4²) = √25 = 5." },
+        { q:"Parte imaginaria de z = 5 − 2i:", o:["5","2","−2","i"], a:2, e:"Es el número que acompaña a la i." },
+        { q:"(3 + 2i) + (1 + 4i) es igual a:", o:["4+6i","4+2i","3+6i","2+6i"], a:0, e:"(3+1)+(2+4)i = 4+6i." },
+        { q:"¿Cuánto vale i⁴?", o:["i","−1","−i","1"], a:3, e:"i⁴ = (i²)² = (−1)² = 1." },
+        { q:"El conjugado de (2 + 3i) es:", o:["2−3i","−2+3i","−2−3i","3+2i"], a:0, e:"El conjugado cambia el signo de la parte imaginaria." },
+        { q:"(2 + i)(2 − i) es igual a:", o:["4−i²","3","5","4+1"], a:2, e:"(a+b)(a−b)=a²+b²=4+1=5." }
+    ]
+};
+
+function startApp() {
+    const input = document.getElementById('user-name');
+    if (input.value.trim() === "") { alert("Por favor, ingresá tu nombre."); return; }
+    userName = input.value;
+    document.getElementById('login-view').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    document.getElementById('welcome-msg').innerText = `Hola, ${userName} 👋`;
+}
+
+function showTopic(topic) {
+    document.querySelectorAll('.content-panel').forEach(p => p.style.display = 'none');
+    document.querySelector('.topics-grid').style.display = 'none';
+    document.getElementById(`panel-${topic}`).style.display = 'block';
+    showSub(topic, 'theory');
+}
+
+function showSub(topic, type) {
+    const panel = document.getElementById(`panel-${topic}`);
+    const buttons = panel.querySelectorAll('.tab-btn');
+    buttons[0].classList.toggle('active', type === 'theory');
+    buttons[1].classList.toggle('active', type === 'quiz');
+    panel.querySelector('.theory-section').classList.toggle('active', type === 'theory');
+    panel.querySelector('.quiz-container').classList.toggle('active', type === 'quiz');
+    if (type === 'quiz') initQuiz(topic);
+}
+
+function home() {
+    document.querySelectorAll('.content-panel').forEach(p => p.style.display = 'none');
+    document.querySelector('.topics-grid').style.display = 'grid';
+}
+
+function initQuiz(topic) {
+    currentQuizName = topic;
+    currentQuestionIndex = 0;
+    document.getElementById(`${topic}-score`).innerText = 0;
+    renderQuestion();
+}
+
+function renderQuestion() {
+    const quizData = quizzes[currentQuizName];
+    const q = quizData[currentQuestionIndex];
+    document.getElementById(`${currentQuizName}-progress`).innerText = `${currentQuestionIndex + 1} / ${quizData.length}`;
+    document.getElementById(`${currentQuizName}-question`).innerText = q.q;
+    const optionsDiv = document.getElementById(`${currentQuizName}-options`);
+    optionsDiv.innerHTML = "";
+    q.o.forEach((opt, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerText = opt;
+        btn.onclick = () => checkAnswer(index);
+        optionsDiv.appendChild(btn);
+    });
+    document.getElementById(`${currentQuizName}-feedback`).style.display = 'none';
+}
+
+function checkAnswer(selectedIndex) {
+    const quizData = quizzes[currentQuizName];
+    const q = quizData[currentQuestionIndex];
+    const buttons = document.getElementById(`${currentQuizName}-options`).children;
+    const feedback = document.getElementById(`${currentQuizName}-feedback`);
+    for (let btn of buttons) btn.style.pointerEvents = 'none';
+    if (selectedIndex === q.a) {
+        buttons[selectedIndex].classList.add('correct');
+        feedback.innerText = "✅ ¡Correcto! " + q.e;
+        feedback.style.background = "rgba(34,197,94,0.2)";
+        feedback.style.color = "#4ade80";
+        totalScore += 10;
+        const scoreEl = document.getElementById(`${currentQuizName}-score`);
+        scoreEl.innerText = parseInt(scoreEl.innerText) + 1;
+    } else {
+        buttons[selectedIndex].classList.add('wrong');
+        buttons[q.a].classList.add('correct');
+        feedback.innerText = "❌ Incorrecto. " + q.e;
+        feedback.style.background = "rgba(239,68,68,0.2)";
+        feedback.style.color = "#f87171";
+        totalScore = Math.max(0, totalScore - 5);
+    }
+    feedback.style.display = 'block';
+    document.getElementById('total-score').innerText = totalScore;
+    setTimeout(() => {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < quizData.length) {
             renderQuestion();
-        }
-
-        function renderQuestion() {
-            const quizData = quizzes[currentQuizName];
-            const q = quizData[currentQuestionIndex];
-            
-            document.getElementById(`${currentQuizName}-progress`).innerText = `${currentQuestionIndex + 1} / ${quizData.length}`;
-            document.getElementById(`${currentQuizName}-question`).innerText = q.q;
-            
-            const optionsDiv = document.getElementById(`${currentQuizName}-options`);
-            optionsDiv.innerHTML = "";
-            
-            q.o.forEach((opt, index) => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.innerText = opt;
-                btn.onclick = () => checkAnswer(index);
-                optionsDiv.appendChild(btn);
-            });
-
-            const feedback = document.getElementById(`${currentQuizName}-feedback`);
-            feedback.style.display = 'none';
-        }
-
-        function checkAnswer(selectedIndex) {
-            const quizData = quizzes[currentQuizName];
-            const q = quizData[currentQuestionIndex];
-            const buttons = document.getElementById(`${currentQuizName}-options`).children;
-            const feedback = document.getElementById(`${currentQuizName}-feedback`);
-
-            // Desactivar botones
-            for (let btn of buttons) btn.style.pointerEvents = 'none';
-
-            if (selectedIndex === q.a) {
-                buttons[selectedIndex].classList.add('correct');
-                feedback.innerText = "¡Correcto! " + q.e;
-                feedback.style.background = "rgba(34, 197, 94, 0.2)";
-                feedback.style.color = "#4ade80";
-                totalScore += 10;
-            } else {
-                buttons[selectedIndex].classList.add('wrong');
-                buttons[q.a].classList.add('correct');
-                feedback.innerText = "Incorrecto. " + q.e;
-                feedback.style.background = "rgba(239, 68, 68, 0.2)";
-                feedback.style.color = "#f87171";
-                totalScore = Math.max(0, totalScore - 5);
-            }
-
+        } else {
+            const score = document.getElementById(`${currentQuizName}-score`).innerText;
+            feedback.innerText = `🎉 ¡Quiz terminado! Respondiste ${score} de ${quizData.length} correctamente.`;
             feedback.style.display = 'block';
-            document.getElementById('total-score').innerText = totalScore;
-
-            setTimeout(() => {
-                currentQuestionIndex++;
-                if (currentQuestionIndex < quizData.length) {
-                    renderQuestion();
-                } else {
-                    alert(`¡Quiz terminado! Puntaje en este tema: ${currentQuestionIndex * 10}`);
-                    showSub(currentQuizName, 'theory');
-                }
-            }, 3000);
         }
+    }, 2500);
+}
 
-        function toggleSol(btn) {
-            const content = btn.nextElementSibling;
-            if (content.style.display === "block") {
-                content.style.display = "none";
-                btn.innerText = "Ver solución";
-            } else {
-                content.style.display = "block";
-                btn.innerText = "Ocultar solución";
-            }
-        }
-    </script>
+function toggleSol(btn) {
+    const content = btn.nextElementSibling;
+    if (content.style.display === "block") {
+        content.style.display = "none";
+        btn.innerText = "Ver solución";
+    } else {
+        content.style.display = "block";
+        btn.innerText = "Ocultar solución";
+    }
+}
+</script>
 </body>
 </html>
